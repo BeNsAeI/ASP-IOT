@@ -1,0 +1,24 @@
+\documentclass[10pt,draftclsnofoot,onecolumn]{IEEEtran}
+\usepackage[legalpaper, margin=.75in]{geometry}
+
+\title{Problem Statement}
+\author{Louis Duvoisin \\ CS 461, Fall 2018}
+
+\begin{document}
+\maketitle
+
+\section{Abstract}
+Our client's problem is that they want to be able to have their family experience their wedding, but are unable to because of the Trump travel ban. Our client has decided that instead they want their family to be able to view live streams of the wedding on a website. Our client has also decided that the videos will be 360 videos, which also means that users will be able to tune in with VR headsets to get a more immersive view. Eventually the cameras will be placed in central areas of the rooms of the venue so as to get the best experience possible. The cameras will need to be able to be live for the entirety of the wedding.
+
+\newpage
+\section{Definition and Description}
+We need to be able to connect a minimum of three 360 degree camera to a server with the ability to add or remove others. These cameras will be livestreaming the full 360 degrees at 1080p and 30 frames per second. The client has specified that we will use the Mozilla A-Frame framework to handle the 360/VR video, but also that the videos will open in a separate page, this means that users will not need to both see the venue map and the video at the same time. The fact that we are hosting 360 video with the potential for some users to be using VR devices, the actual website should at least be usable while wearing a VR device.\\
+The client has specified that we use a LAMP server stack to host our webpage. This server will need to take be able to pipe the video stream coming from the cameras to the internet. Ideally the server wouldn't need to store or do any processing of the video stream other than what is required to send it to clients. The web portal will have a map of the venue which  will contain icons where the cameras are that link users to that specific livestream.
+\section{Proposed Solution}
+We will make a website where users can connect and select which livestream they want to watch. The user will be given a map of the venue, and they will select a livestream to be shown. The streaming devices will be positioned around the venue and will have their own internet connection so that they can stream their video feed. They should be placed in central locations of the rooms as well because we are required to have 360 video capability. We will be contacting our client to find out whether or not they have specific cameras in mind. The cameras will then stream their video to a LAMP (Linux, Apache, MySQL, PHP) server (client specification) we will set up. The server will also host the website.\\
+The website will use Mozilla A-Frame as a framework for handling 360 video. This means that it will also support VR devices and the website should at least be usable while using a VR headset. The client has specified that the videos will open in a separate page from the venue map, which will make the integration of the streams simpler. Because the client has also specified that the website will need to be able to add or remove streaming devices we will need consider the scalability of the website as well.\\
+The cameras will need to have 360 video capability, be able to connect to WiFi, be easily deployable, and be portable. The portable and easily deployable sections mean there will probably need to be a battery powering them. The batteries will either need to be easily swappable, or be large enough to power the cameras for the entire duration of the wedding.
+\section{Performance Metrics}
+Our project has a hard deadline with our client's wedding date. As of writing this, I don't currently have a date for this. Our project will be complete when we are able to connect at least 3 cameras to our server, have them stream video to the server, and have the server hosting a website that users can connect to and select a stream to view. The client has specified that the cameras will need to stream in 1080p and 30 frames per seconds, but I don't think that should be a metric that holds back the project.
+
+\end{document}
