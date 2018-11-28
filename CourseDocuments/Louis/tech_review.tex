@@ -1,0 +1,170 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{		Nexusphere}
+\def \CapstoneTeamNumber{		48}
+\def \GroupMemberOne{			Louis Duvoisin}
+%\def \GroupMemberTwo{			Louis Duvoisin}
+%\def \GroupMemberThree{			Sarahi Pelayo}
+\def \CapstoneProjectName{		A-Frame Live Stream Portal}
+\def \CapstoneSponsorCompany{	Oregon State University}
+\def \CapstoneSponsorPerson{		Behnam Saeedi}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{	%Problem Statement
+				%Requirements Document
+				Technology Review
+				%Design Document
+				%Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+    	%\includegraphics[height=4cm]{coe_v_spot1}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                %\NameSigPair{\GroupMemberTwo}\par
+                %\NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+        }
+        \begin{abstract}
+        % 6. Fill in your abstract    
+        	This is a draft of the Technology Review document. This document contains research on the technology our group will be using in certain areas. The areas covered in this document are UI Frameworks, Standard Cameras, and how our devices will connect to our web server.
+        \end{abstract}   	 
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+
+\section{What we're trying to accomplish}
+We are trying to live stream our sponsor's wedding to his family in Iran who can not attend due to the travel ban put in place by the current administration. In order to do this we need multiple different technologies. In this document I will be introducing multiple options for our UI, multiple options for the cameras our devices will have, and multiple methods for connecting our devices to the internet.
+
+\section{UI Frameworks}
+    UI Frameworks, while not a necessity, make starting a project much easier. Frameworks provide a starting block to build your website off of, and provide many pre-styled components for developers to use. In this section I will be assessing different frameworks on: customizability, size, difficulty of setup, and difficulty to work with.
+    \subsection{Bootstrap}
+    Bootstrap is the most popular UI framework in use today \cite{IEEEhowto:Bootstrap}. It is heavily customizable and many people have already made 3rd party extensions and add-ons, which we could also use. The framework also supports mobile devices so making our site mobile friendly shouldn't be too hard. One downside of Bootstrap is that it is quite a large framework and would greatly increase the size of our project. Our website will not have many different pages, but Bootstrap is most useful for large websites with multiple components that should look identical throughout the site. Our website is going to be at most 5 pages, with very few repeated components. In addition, Bootstrap is built to use a 12 column system with percentage based sizing as opposed to the more flexible grid available with base CSS. Bootstrap is a great framework, but I think that because the website needed for our project will only be at most 5 different pages, and the fact that it is tailored to the desires a specific client make Bootstrap too much effort for too little reward.
+    \subsection{Skeleton}
+    Skeleton is a lightweight framework specifically designed for smaller projects \cite{IEEEhowto:Skeleton}. It is extremely small consisting of approximately 400 lines and was built with mobile viewing in mind. It is also super easy to start using as it requires no compilation or installation, you just download the file and go. A downside for most projects would be that it is not a true framework and does not contain many styled components that other frameworks have, however for this project this is acceptable, as we will likely be making our own components anyways with input from our sponsor. While Skeleton also uses the 12 column system, it has fewer styles by default, making it easier to use another system if you want.
+    \subsection{None}
+    The newly released CSS Grid system has support from every major browser except for internet explorer (which makes up almost 5 percent of users in Iran \cite{IEEEhowto:CanIUseGrid}) making it easier than ever for developers to make their own layout systems. This option would provide the most customization for our sponsor as everything would be made by scratch. This would work especially well as our web site will have very few pages with duplicate styling. The obvious downside of this option is that we would be starting from scratch. Starting with an empty page is hard and a major benefit of using a framework, even a small one, is that you already have something that you can build off of.
+    \newline
+    \newline
+    \begin{tabular}{|l|p{4cm}|p{2cm}|p{4cm}|p{4cm}|}
+         \hline
+         Framework & Customizability & Size & Setup Difficulty & Use Difficulty \\ \hline
+         
+         Bootstrap & Has many themes to select from & Very large & Not too difficult, but does take some work & Has a learning curve \\ \hline
+         
+         Skeleton & Because it has very few pre-made styles everything is customizable & Very small, only one file & Place the file in your repository and you can use it & Very easy to use \\ \hline
+         
+         None & Very customizable because nothing is preset & N/A & No setup & You need to make your own layout which makes use more difficult\\ \hline
+    \end{tabular}
+
+\section{Standard Cameras}
+Our devices will need cameras in able to capture video. Our sponsor has requested that our devices be able to stream 480p video, but would be happy to get higher quality. In this section I will be comparing different cameras on: video quality, auto-focusing capability, and ease of setup.
+%update to include multiple quality streams, raspi module supports
+
+    \subsection{AUSDOM 1080P HD USB Webcam}
+    This webcam is well suited for users who are trying to get the features of a full webcam at a lower price \cite{IEEEhowto:AUSDOM1080p}. It offers 1080p video, and low light enhancement. It connects with USB 2.0 or 3.0 and as a large upside weighs less than 4.5 ounces. Some downsides to this device are that it does not have an auto-focus, meaning that the end user would need to load the live streams in order to focus the device. After the device is focused however, there would be no automatic focus adjustments as people walk in front of the device which would be an upside. A small downside of this camera is that we would need to design a special stand to attach it to our devices. The device also has a microphone and some noise canceling technology but I don't think it would be a suitable replacement for using a separate higher quality microphone.
+    \subsection{Logitech C920}
+    The Logitech C920 is a slightly higher end webcam, it also supports 1080p video and has low light enhancement \cite{IEEEhowto:LogitechC920}. It also connects via USB 2.0/3.0, it weighs slightly more than the AUSDOM webcam at 5.7 ounces, but that is a negligible difference for our project. This device has auto focus technology, which would mean that the person setting up the camera would not need to focus the device and would just need to connect it and walk away. The downside to an auto focus is that if the camera is in a position where people are regularly walking in front of it, the camera will try to refocus on each person, which would look weird on the livestream. Another upside to this camera is that it has stereo microphones. A device using this camera would be able to replace a fourth device only using a microphone if placed near the main source of sound.
+    \subsection{Raspberry Pi Camera module}
+    This camera would be the cheapest and easiest camera that meets all the requirements set out by our sponsor. The device can stream 1080p video, and weighs less than half an ounce, far less than the other two cameras mentioned \cite{IEEEhowto:RaspberryPiModule}. The camera connects directly to a Raspberry Pi with a dedicated cable and is specifically designed to work with Raspberry Pis. This camera could actually fit inside our casing, so we would only need to make a hole for the camera to see through to attach this camera. Additionally, there are pre-existing functions for the camera module that allow different quality video to be recorded, which would be a good backup in case the venue WiFi is not able to support the amount of data being sent. A downside to this camera is that it has a fixed focus lens. That means that the user will need to make sure to place each device an appropriate distance from the content they want the camera to film, it does however do some basic image/video balancing. Another major potential downside that Dr. McGrath brought up is that in the past Raspberry Pis have had issues with video encoding and transmission over a network, we will need to test this and will determine whether or not we will use this camera. I think that should we choose to use a Raspberry Pi and we have no encoding issues, this camera is the best option as it would be the simplest to integrate and meets all of our sponsors needs.
+    \newline
+    \newline
+    \begin{tabular}{|l|p{3cm}|p{4cm}|p{4cm}|}
+         \hline
+         Camera & Video Quality & Auto-Focusing & Ease of Setup \\ \hline
+         
+         USDOM 1080P HD USB Webcam & 1080p & Manual Focus  & Requires driver installation \\ \hline
+         
+         Logitech C920 & 1080p & Has auto-focus built in to camera & Requires driver installation \\ \hline
+         
+         Raspberry Pi Camera module & 1080p & No focusing & No drivers required \\ \hline
+    \end{tabular}
+
+\section{Connectivity method}
+There are a variety of ways that our devices will connect to the internet. In all cases our devices will be streaming from the venue to our server. This section is only about how the devices will use the venue WiFi to connect to our server. The methods will be compared by reliability, ease of setup, ease of programming.
+    \subsection{Local WiFi Network}
+    Making a local WiFi network for our devices to connect to would allow for an easier set up by the end user. The devices would connect to a central hub hosting a network and and would stream all of their data through the hub to our website on the OSU servers. Picking this method would mean that the person setting up the devices would only need to connect one device to the WiFi at the venue, and would simply need to turn on the other devices and they would automatically connect to the network hosted by the central hub. The downside of this option is that it would require and extra device to function as a hub, and would be more difficult for the developers to implement.
+
+    \subsection{Local Wired Network}
+    Making a local wired network for our devices would be difficult for the end user to set up, but would guarantee connectivity for all our devices. The devices would be wired to a central hub, which would either connect to the venue WiFi, or be wired in to a wall port or router. The hub would then send all of the streams to our web server to be hosted on our website. This option should only be considered if we are unable to get our devices to connect to WiFi reliably enough to stream video as it would require running wires across the venue.
+
+    \subsection{Devices Connect to Server Individually}
+    Having each of our devices connect to the venue WiFi and directly stream their content to our web server would be the most robust option provided our devices can connect to the venue WiFi reliably. This option would allow the system to keep running should any device stop working. The only downside to this option is that it the person setting up the devices would need to connect each device to the internet individually, through a Bluetooth phone app we will make for our sponsors phone. Another potential downside could be that the venue WiFi is not reliable enough to handle the connection of 3 devices streaming 1080p video, which is unlikely but possible. This option is the best barring unreliable WiFi, and if given the time we may implement one of the other solutions as a back-up.
+    \newline
+    \newline
+\begin{tabular}{|l|p{4cm}|p{4cm}|p{4cm}|}
+         \hline
+         Method & Reliability & Ease of Setup & Ease of Programming \\ \hline
+         
+         Local WiFi Network & Cameras can go down, hub can not & Only one device to setup & Requires programming a central hub to host a network\\ \hline
+         
+         Local Wired Network & Cameras can go down, hub can not. Reliant on wires & Requires connecting devices with wires to setup & Requires programming a central hub, but will be easier than a wireless network \\ \hline
+         
+         Devices Connect Individually & Devices are independent & Requires connecting each device to the internet & Requires programming a phone app to connect devices to internet. \\ \hline
+    \end{tabular}
+    \newline
+\begin{thebibliography}{1}
+
+\bibitem{IEEEhowto:Bootstrap}
+https://getbootstrap.com/
+\bibitem{IEEEhowto:Skeleton}
+http://getskeleton.com/
+\bibitem{IEEEhowto:CanIUseGrid}
+https://caniuse.com/#feat=css-grid
+\bibitem{IEEEhowto:AUSDOM1080p}
+https://www.amazon.com/Microphone-Exposure-Freestanding-Computer-Messenger/dp/B012CK43W6
+\bibitem{IEEEhowto:LogitechC920}
+ https://www.logitech.com/en-us/product/hd-pro-webcam-c920
+\bibitem{IEEEhowto:RaspberryPiModule}
+https://www.amazon.com/Raspberry-Pi-Camera-Module-Megapixel/dp/B01ER2SKFS/
+
+\end{thebibliography}
+
+\end{document}
