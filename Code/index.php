@@ -35,18 +35,20 @@
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
-    <div class="row">
-      <div class="one-half column" style="margin-top: 25%">
+    <div class="row login-header">
+      <div class="two-thirds column">
         <h2>Welcome</h2>
-        <h3>To Ben and Jenna's Wedding</h3>
       </div>
+      <div class="column no-margin">
+        <h3>To Ben and Jenna's Wedding</h3>
+      </div>     
     </div>
     <div class="row">
       <div id="login-container">
         <p class="login-text">Enter your login token</p>
         <i class="icon-key">t</i>
         <input type="text" name="token">
-        <input type="submit" name="submit">
+        <input type="submit" name="submit" value="Enter"> <!-- Enter is a placeholder, will eventually have an icon -->
       </div>
     </div>
   </div>

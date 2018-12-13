@@ -1,3 +1,21 @@
+/* Various changes */
+.no-margin{
+    margin: 0;
+}
+/* Stuff for all pages */
+body{
+    background: #d7cec7;
+}
+
+
+
+/* Login Page */
+.login-header{
+    margin-top: 15%;
+}
+#login-container{
+    margin-top: 15%;
+}
 @supports(display: grid){
     #login-container{
         display: grid;
@@ -13,11 +31,13 @@
     }
     .icon-key{
         grid-area: icon;
+        margin: 0 auto;
     }
-    .input[name="token"]{
-        grid-area: input;
+    input[name="token"]{
+        grid-area: input;        
     }
-    .input[name="submit"]{
+    input[name="submit"]{
+        margin: 0 1em;
         grid-area: submit;
     }
 }
