@@ -23,21 +23,30 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/custom.css">
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="images/favicon.png">
 
 </head>
-<body>
+<body id="login">
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="row">
       <div class="one-half column" style="margin-top: 25%">
-        <h4>Basic Page</h4>
-        <p>Content goes here.</p>
+        <h2>Welcome</h2>
+        <h3>To Ben and Jenna's Wedding</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div id="login-container">
+        <p class="login-text">Enter your login token</p>
+        <i class="icon-key">t</i>
+        <input type="text" name="token">
+        <input type="submit" name="submit">
       </div>
     </div>
   </div>

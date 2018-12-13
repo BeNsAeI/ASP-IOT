@@ -1,0 +1,23 @@
+@supports(display: grid){
+    #login-container{
+        display: grid;
+        grid-template-columns: 1fr minmax(300px, 4fr) 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        ". text ."
+        "icon input submit"
+    }
+
+    .login-text{
+        grid-area: text;
+    }
+    .icon-key{
+        grid-area: icon;
+    }
+    .input[name="token"]{
+        grid-area: input;
+    }
+    .input[name="submit"]{
+        grid-area: submit;
+    }
+}
