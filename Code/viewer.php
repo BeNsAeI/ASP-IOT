@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Admin</title>
+<title>Viewer</title>
 </head>
 <body>
 Welcome to the viewer page, there is nothing here yet
