@@ -1,4 +1,16 @@
 <?php 
+if (isset($_POST['button1']))
+{
+  if($_POST["name"] == "test")
+  {
+  header("Location: admin.php");
+  }
+  else
+  {
+    echo ("wrong password");
+   // header("Location: index.php");
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,15 +56,16 @@
       </div>     
     </div>
     <div class="row">
-      <div id="login-container">
-        <p class="login-text">Enter your login token</p>
-        <i class="icon-key">t</i>
-        <input type="text" name="token">
-        <input type="submit" name="submit" value="Enter"> <!-- Enter is a placeholder, will eventually have an icon -->
-      </div>
+     <!-- <div id="login-container"> -->
+        <form method="POST" action=''>
+        <fieldset>
+          <legend> Enter your login token</legend>
+          <p>token <input type="text" name="name" /><input type="submit" name="button1"  value="Enter"/></p>
+        </fieldset>
+        </form> 
+        <!-- <input type="submit" name="submit"  value="Enter"> --> 
     </div>
   </div>
-
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
