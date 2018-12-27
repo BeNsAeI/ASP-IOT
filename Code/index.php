@@ -1,9 +1,13 @@
 <?php 
 if (isset($_POST['button1']))
 {
-  if($_POST["name"] == "test")
+  if($_POST["name"] == "admin")
   {
   header("Location: admin.php");
+  }
+  elseif($_POST["name"] == "viewer")
+  {
+    header("Location: viewer.php");
   }
   else
   {
