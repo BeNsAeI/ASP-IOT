@@ -33,7 +33,17 @@ echo'<body style="background-color:Bisque">';
 .form-popup {
   display: none;
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
+  /*right: 15px;*/
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* The popup form - hidden by default */
+.form-popupdelete {
+  display: none;
+  position: absolute;
+  bottom: 200px;
   /*right: 15px;*/
   border: 3px solid #f1f1f1;
   z-index: 9;
@@ -87,13 +97,15 @@ echo'<body style="background-color:Bisque">';
 
 <h2>Welcome to Ben and Jenna's Wedding</h2>
 
+<!-- buttons -->
 <button class="add-button" onclick="addForm()">ADD DEVICE</button>
 <button class="move-button" onclick="openForm()">MOVE DEVICE</button>
-<button class="delete-button" onclick="openForm()">DELETE DEVICE</button>
+<button class="delete-button" onclick="deleteForm()">DELETE DEVICE</button>
 <button class="change-button" onclick="openForm()">CHANGE DEVICE</button>
 
-<div class="form-popup" id="myForm">
-  <form action="/action_page.php" class="form-container">
+<!--add camera form-->
+<div class="form-popup" id="addForm">
+  <form action='' class="form-container">
     <h1>Add Device</h1>
     <b> Device Type: </b>
     <p>
@@ -106,17 +118,43 @@ echo'<body style="background-color:Bisque">';
     <b> Device Code: <input type="text" placeholder="Device Code" name="CODE" required> </b>
 
     <button type="submit" class="btn">Submit</button>
-    <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+    <button type="button" class="btn cancel" onclick="closeFormAdd()">Cancel</button>
+  </form>
+</div>
+
+<!-- delete device form -->
+<div class="form-popupdelete" id="deleteForm">
+  <form action='' class="form-container">
+    <h1>Delete</h1>
+    <b> Device Name: </b>
+    <input list="camera" name="camera">
+    <datalist id="camera">
+        <option value="Normal camera1">
+        <option value="microphone">
+        <option value="360 camera">
+    </datalist>
+    
+    <button type="submit" class="btn">Submit</button>
+    <button type="button" class="btn cancel" onclick="closeFormDelete()">Cancel</button>
   </form>
 </div>
 
 <script>
+
 function addForm() {
-  document.getElementById("myForm").style.display = "block";
+  document.getElementById("addForm").style.display = "block";
 }
 
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
+function deleteForm() {
+  document.getElementById("deleteForm").style.display = "block";
+}
+
+function closeFormAdd() {
+  document.getElementById("addForm").style.display = "none";
+}
+
+function closeFormDelete() {
+  document.getElementById("deleteForm").style.display = "none";
 }
 </script>
 
