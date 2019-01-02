@@ -101,7 +101,7 @@ echo'<body style="background-color:Bisque">';
 <button class="add-button" onclick="addForm()">ADD DEVICE</button>
 <button class="move-button" onclick="openForm()">MOVE DEVICE</button>
 <button class="delete-button" onclick="deleteForm()">DELETE DEVICE</button>
-<button class="change-button" onclick="openForm()">CHANGE DEVICE</button>
+<button class="change-button" onclick="openForm()">CHANGE MAP</button>
 
 <!--add camera form-->
 <div class="form-popup" id="addForm">
