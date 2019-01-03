@@ -6,6 +6,17 @@
 body{
     background: #d7cec7;
 }
+#modal-backbround{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #333333;
+    opacity: .5;
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+}
 
 
 
@@ -15,6 +26,9 @@ body{
 }
 #login-container{
     margin-top: 15%;
+}
+.token-fail{
+    color: #ff0000;
 }
 @supports(display: grid){
     #login-container{
@@ -41,3 +55,5 @@ body{
         grid-area: submit;
     }
 }
+
+/* Admin page */

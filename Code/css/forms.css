@@ -1,0 +1,75 @@
+/* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: absolute;
+    width: 100vw;
+    /* height: 100vh; */
+    top: 0;
+    z-index: 101;
+    grid-template-columns: 1fr minmax(auto,60vw) 1fr;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    display: grid;
+    grid-column: 2/3;
+    margin: 3em;
+    padding: 10px;
+    background-color: #d7cec7;
+    grid-template-columns: 1em 1fr fit-content(150px) 2fr fit-content(300px) 1fr 1em;
+    grid-template-rows: 4em auto 40px;
+    grid-row-gap: 1em;
+  }
+  
+  /* Full-width input fields */
+  .form-container input[type=text], .form-container input[type=text] {
+    padding: 15px;
+    margin: 10px 5px 10px 5px;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus, .form-container input[type=text]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  /* Set a style for form buttons */
+  .form-container .btn {
+    background-color: MediumSpringGreen;
+    color: black;
+    width: 120px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  .form-container .submit {
+    /* grid-row: last; */
+    grid-column: 5/7;
+    justify-self: end;
+  }
+  .form-container .cancel {
+    /* grid-row: last; */
+    grid-column: 2/4;
+    background-color: grey;
+  }
+  
+  /* Add some hover effects to buttons */
+  .form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
+
+  /* Make labels on one side of forms */
+  .form-container .form-label{
+    grid-column: 3/4;
+    margin: 0;
+  }
+  .form-container .form-input{
+    grid-column: 5/6;
+    margin: 0;
+  }
+
+  .form-container h1{
+      grid-column: 2/6;
+  }

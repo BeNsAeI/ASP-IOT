@@ -33,7 +33,6 @@ echo'<body style="background-color:Bisque">';
 
 <body>
 <h2>Welcome to Ben and Jenna's Wedding</h2>
-    <img  src="images/venue.png" alt="venue"
-    style="width:800px;height:500px;">
+    <img class="venue-map" src="images/venue.png" alt="venue">
 </body>
 </html>

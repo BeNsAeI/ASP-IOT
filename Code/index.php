@@ -1,4 +1,5 @@
 <?php 
+$incorrectGuess = false;
 if (isset($_POST['button1']))
 {
   if($_POST["name"] == "admin")
@@ -11,7 +12,7 @@ if (isset($_POST['button1']))
   }
   else
   {
-    echo ("wrong password");
+    $incorrectGuess = true;
    // header("Location: index.php");
   }
 }
@@ -57,7 +58,7 @@ if (isset($_POST['button1']))
       </div>
       <div class="column no-margin">
         <h3>To Ben and Jenna's Wedding</h3>
-      </div>     
+      </div>
     </div>
     <div class="row">
      <!-- <div id="login-container"> -->
@@ -65,6 +66,9 @@ if (isset($_POST['button1']))
         <fieldset>
           <legend> Enter your login token</legend>
           <p>token <input type="text" name="name" /><input type="submit" name="button1"  value="Enter"/></p>
+          <?php if($incorrectGuess){
+            echo '<p class="token-fail"> Incorrect Login Token </p>';
+          }?>
         </fieldset>
         </form> 
         <!-- <input type="submit" name="submit"  value="Enter"> --> 

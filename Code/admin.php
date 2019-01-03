@@ -21,6 +21,7 @@ echo'<body style="background-color:Bisque">';
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/forms.css">
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -28,68 +29,6 @@ echo'<body style="background-color:Bisque">';
 
 <title>Admin</title>
 <style>
-
-/* The popup form - hidden by default */
-.form-popup {
-  display: none;
-  position: absolute;
-  bottom: 0px;
-  /*right: 15px;*/
-  border: 3px solid #f1f1f1;
-  z-index: 9;
-}
-
-/* The popup form - hidden by default */
-.form-popupdelete {
-  display: none;
-  position: absolute;
-  bottom: 200px;
-  /*right: 15px;*/
-  border: 3px solid #f1f1f1;
-  z-index: 9;
-}
-
-/* Add styles to the form container */
-.form-container {
-  max-width: 300px;
-  padding: 10px;
-  background-color: white;
-}
-
-/* Full-width input fields */
-.form-container input[type=text], .form-container input[type=text] {
-  width: 100%;
-  padding: 15px;
-  margin: 10px 5px 10px 5px;
-  border: none;
-  background: #f1f1f1;
-}
-
-/* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=text]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-/* Set a style for the submit/login button */
-.form-container .btn {
-  background-color: MediumSpringGreen;
-  color: black;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.8;
-}
-
-/* Add a grey background color to the cancel button */
-.form-container .cancel {
-  background-color: grey;
-}
-
-/* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-  opacity: 1;
-}
 
 </style>
 </head>
@@ -103,63 +42,71 @@ echo'<body style="background-color:Bisque">';
 <button class="delete-button" onclick="deleteForm()">DELETE DEVICE</button>
 <button class="change-button" onclick="openForm()">CHANGE MAP</button>
 
+<div id="modal-backbround"></div>;
+
 <!--add camera form-->
 <div class="form-popup" id="addForm">
   <form action='' class="form-container">
     <h1>Add Device</h1>
-    <b> Device Type: </b>
-    <p>
+    <b class="form-label"> Device Type: </b>
+    <p class="form-input">
     <input type="radio" name="camera" /> Normal Camera<br />
     <input type="radio" name="camera" /> 360 Camera<br />
     <input type="radio" name="camera" /> Microphone<br /> </p>
 
-    <b> Device Name: <input type="text" placeholder="Name" name="NAME" required> </b>
+    <b class="form-label"> Device Name:</b>
+    <input class="form-input" type="text" placeholder="Name" name="NAME" required>
 
-    <b> Device Code: <input type="text" placeholder="Device Code" name="CODE" required> </b>
+    <b class="form-label"> Device Code:</b>
+    <input class="form-input" type="text" placeholder="Device Code" name="CODE" required> 
 
-    <button type="submit" class="btn">Submit</button>
     <button type="button" class="btn cancel" onclick="closeFormAdd()">Cancel</button>
+    <button type="submit" class="btn submit">Submit</button>
+
   </form>
 </div>
 
 <!-- delete device form -->
-<div class="form-popupdelete" id="deleteForm">
+<div class="form-popup delete" id="deleteForm">
   <form action='' class="form-container">
     <h1>Delete</h1>
-    <b> Device Name: </b>
-    <input list="camera" name="camera">
+    <b class="form-label"> Device Name: </b>
+    <input class="form-input" list="camera" name="camera">
     <datalist id="camera">
         <option value="Normal camera1">
         <option value="microphone">
         <option value="360 camera">
     </datalist>
     
-    <button type="submit" class="btn">Submit</button>
     <button type="button" class="btn cancel" onclick="closeFormDelete()">Cancel</button>
+    <button type="submit" class="btn submit">Submit</button>
   </form>
 </div>
 
-<script>
+<img class="venue-map" src="images/venue.png" alt="venue">
 
+</body>
+
+<script>
 function addForm() {
-  document.getElementById("addForm").style.display = "block";
+  document.getElementById("addForm").style.display = "grid";
+  document.getElementById("modal-backbround").style.display = "block";
 }
 
 function deleteForm() {
-  document.getElementById("deleteForm").style.display = "block";
+  document.getElementById("deleteForm").style.display = "grid";
+  document.getElementById("modal-backbround").style.display = "block";
 }
 
 function closeFormAdd() {
   document.getElementById("addForm").style.display = "none";
+  document.getElementById("modal-backbround").style.display = "none";
 }
 
 function closeFormDelete() {
   document.getElementById("deleteForm").style.display = "none";
+  document.getElementById("modal-backbround").style.display = "none";
 }
 </script>
 
-<img  background="images/venue.png" alt="venue"
-    style="width:800px;height:450px;">
-
-</body>
 </html>
