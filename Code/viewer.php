@@ -1,5 +1,12 @@
 <?php 
-echo'<body style="background-color:Bisque">';
+// If they haven't logged in with a token send them back to index
+session_start();
+
+if($_SESSION['username'] != "viewer")
+{
+	header("location: index.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

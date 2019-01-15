@@ -1,19 +1,26 @@
 <?php 
+//ob_start();
+session_start();
+
 $incorrectGuess = false;
-if (isset($_POST['button1']))
+if (isset($_POST['submit']))
 {
-  if($_POST["name"] == "admin")
+  $token = $_POST["token"];
+  if($token == "viewer")
   {
-  header("Location: admin.php");
+    $_SESSION['valid'] = true;
+    $_SESSION['username'] = 'viewer';
+    header("Location: main.php");
   }
-  elseif($_POST["name"] == "viewer")
+  elseif($token == "admin")
   {
-    header("Location: viewer.php");
+    $_SESSION['valid'] = true;
+    $_SESSION['username'] = 'admin';
+    header("Location: main.php");
   }
   else
   {
     $incorrectGuess = true;
-   // header("Location: index.php");
   }
 }
 ?>
@@ -32,9 +39,10 @@ if (isset($_POST['button1']))
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- FONT
+  <!-- Fonts & Icons
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -45,6 +53,10 @@ if (isset($_POST['button1']))
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- JS 
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="js/index.js"></script>
 
 </head>
 <body id="login">
@@ -61,17 +73,22 @@ if (isset($_POST['button1']))
       </div>
     </div>
     <div class="row">
-     <!-- <div id="login-container"> -->
-        <form method="POST" action=''>
-        <fieldset>
-          <legend> Enter your login token</legend>
-          <p>token <input type="text" name="name" /><input type="submit" name="button1"  value="Enter"/></p>
+     <form method="POST" id="login-container" action="<?php //echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+        <!-- <form method="POST" action=''> -->
+        <!-- <fieldset> -->
+          <legend class="login-text"> Enter your login token</legend>
+          <p class="icon-key"> token </p>
+          <input id="user-token-input" type="text" name="token" />
+          <button id="submit-token" type="submit" name="submit">
+            <i class="material-icons md-18">input</i>
+          </button>
           <?php if($incorrectGuess){
             echo '<p class="token-fail"> Incorrect Login Token </p>';
           }?>
-        </fieldset>
-        </form> 
+        <!-- </fieldset> -->
+        <!-- </form>  -->
         <!-- <input type="submit" name="submit"  value="Enter"> --> 
+        </form>
     </div>
   </div>
 <!-- End Document

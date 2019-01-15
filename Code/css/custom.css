@@ -37,23 +37,63 @@ body{
         grid-template-rows: auto;
         grid-template-areas: 
         ". text ."
-        "icon input submit"
+        "icon input ."
+        ". fail ."
+        ". submit ."
     }
 
     .login-text{
         grid-area: text;
+        justify-self: center;
+
     }
     .icon-key{
         grid-area: icon;
         margin: 0 auto;
     }
+    .token-fail{
+        grid-area: fail;
+    }
     input[name="token"]{
         grid-area: input;        
     }
-    input[name="submit"]{
-        margin: 0 1em;
+    button[name="submit"]{
+        margin: 0;
         grid-area: submit;
+    }
+    button[name="submit"]:after{
+        content: test;
+    }
+    
+    /* Overrides for devices with widths larger than 550px */
+    @media (min-width: 550px) {
+        #login-container{
+            grid-template-columns: 1fr minmax(300px, 4fr) 1fr;
+            grid-template-rows: auto;
+            grid-template-areas: 
+            ". text ."
+            "icon input submit"
+            ". fail ."
+        }
+        button[name="submit"]{
+            margin: 0 1em;
+        }
     }
 }
 
-/* Admin page */
+/* Main page */
+
+#main-content{
+    margin: 0 10%;
+    max-height: 80vh;
+    max-width: 80vw;
+}
+#admin-buttons{
+    width: 100%;
+}
+.venue-map{
+    max-width:75vw;
+    max-height:75vh;
+    width: auto;
+    height: auto;
+}
