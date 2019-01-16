@@ -59,7 +59,7 @@ if($_SESSION['username'] != "admin" && $_SESSION['username'] != "viewer")
       <button class="add-button" onclick="addForm()">ADD DEVICE</button>
       <button class="move-button" onclick="openForm()">MOVE DEVICE</button>
       <button class="delete-button" onclick="deleteForm()">DELETE DEVICE</button>
-      <button class="change-button" onclick="openForm()">CHANGE MAP</button>
+      <button class="change-button" onclick="mapForm()">CHANGE MAP</button>
     </div>
 
     <div id="modal-backbround"></div>
@@ -101,11 +101,26 @@ if($_SESSION['username'] != "admin" && $_SESSION['username'] != "viewer")
         <button type="submit" class="btn submit">Submit</button>
       </form>
     </div>
+
+    <!-- change map form -->
+    <div class="form-popup" id="mapForm">
+      <form method="post" class="form-container" enctype="multipart/form-data">
+        <h1>Change Map</h1>
+        <input id="upload-map" class="form-label-wide" type="file" name="image">
+         <div class="form-input"></div> <!-- Intentionally left empty for form auto placement -->
+
+        <button type="button" class="btn cancel" onclick="closeFormMap()">Cancel</button>
+        <input class="btn submit" type="submit" value="Upload File" name="submit">
+
+      </form>
+    </div>
+
+
     <script src="js/main.js"></script>
   <?php } ?>
 
   <div id="map-container">
-    <img class="venue-map" src="images/venue.png" alt="venue">
+    <img class="venue-map" src="images/venue-test" alt="venue">
   </div>
 
 </div>

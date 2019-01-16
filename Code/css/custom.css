@@ -97,3 +97,44 @@ body{
     width: auto;
     height: auto;
 }
+
+@supports(display: grid){
+
+    #main-content{
+        max-height: 100vh;
+        max-width: 100vw;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr minmax(350px, 4fr) 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        ". buttons ."
+        ". map ."
+        "logout . ."
+    }
+    #admin-buttons{
+            grid-area: buttons;
+            display: grid;
+            column-gap: 2em;
+            /* grid-template-columns: repeat(auto-fit, 1fr) repeat(auto-fit, 1fr); */
+                     
+        }
+    .venue-map{
+        display: block;
+        max-width:100%;
+        max-height:100vh;
+        margin: 0 auto;
+    }
+    #map-container{
+        grid-area: map;
+    }
+    .logout{
+        grid-area: logout;
+    }
+    @media (min-width: 550px) {
+        #admin-buttons{
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+        }
+    }
+}
