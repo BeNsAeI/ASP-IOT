@@ -1,14 +1,16 @@
 <?php 
 // If they haven't logged in with a token send them back to index
 session_start();
-//echo "testing";
-//header("location: index.php");
 if($_SESSION['username'] != "admin" && $_SESSION['username'] != "viewer")
 {
 	header("location: index.php");
 }
-//print_r($_SESSION['username']);
 
+
+include 'database.php';
+echo "Before DB";
+$db = new Database();
+echo "After";
 ?>
 <!DOCTYPE html>
 <!-- popup and formatting for popup taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
@@ -120,7 +122,14 @@ if($_SESSION['username'] != "admin" && $_SESSION['username'] != "viewer")
   <?php } ?>
 
   <div id="map-container">
-    <img class="venue-map" src="images/venue-test" alt="venue">
+    <?php
+    $sql = "SELECT * FROM  `map` ORDER BY id DESC LIMIT 0, 1" ;
+    $result = $db->query($sql);
+    $mapPath = $result["File"];
+    $rows = $result["Rows"];
+    $columns = $result["Columns"];
+    ?>
+    <img class="venue-map" src="images/<?php echo $mapPath;?>" alt="venue">
   </div>
 
 </div>
