@@ -5,12 +5,10 @@ if($_SESSION['username'] != "admin" && $_SESSION['username'] != "viewer")
 {
 	header("location: index.php");
 }
-
+ini_set('display_errors', 'on');
 
 include 'database.php';
-echo "Before DB";
 $db = new Database();
-echo "After";
 ?>
 <!DOCTYPE html>
 <!-- popup and formatting for popup taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->

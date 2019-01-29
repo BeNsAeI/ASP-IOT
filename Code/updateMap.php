@@ -1,4 +1,5 @@
 <?php
+include 'database.php';
 $db = new Database();
 
 
@@ -14,7 +15,7 @@ $db = new Database();
             $file_size = $_FILES['files']['size'][0];
             $file_ext = strtolower(end(explode('.', $_FILES['files']['name'][0])));
 
-            $file = $path . $file_name . $file_ext;
+            $file = $file_name;
 
             if (!in_array($file_ext, $extensions)) {
                 $errors[] = 'Extension not allowed: ' . $file_name . ' ' . $file_type . ' ' . $file_ext;
@@ -26,10 +27,16 @@ $db = new Database();
 
             if (empty($errors)) {
                 move_uploaded_file($file_tmp, $file);
+                $myfile = fopen("sql-error-2.txt", "w");
+                $txt = 'test';
 
                 $sql = "INSERT INTO `duvoisil-db`.`map` (`File` ,`Rows` ,`Columns`) VALUES ('";
                 $sql .= $file; 
                 $sql .= "',  '10',  '10');";
+                $txt = $db->query($sql);
+
+                fwrite($myfile, $txt);
+                fclose($myfile);
             }
             if ($errors) print_r($errors);
         }

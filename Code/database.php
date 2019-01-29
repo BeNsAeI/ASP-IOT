@@ -11,10 +11,10 @@ class Database {
         $myfile = fopen("sql-error.txt", "w");
         $txt = 'test';        
 
-        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-         
-        if ($mysqli->connect_errno) {          
-            $txt = "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+        $this->mysqli = new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname);
+
+        if ($this->mysqli->connect_errno) {          
+            $txt = "Failed to connect to MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
         } else {
             $txt = 'Successfully connected to database!';
         }
@@ -23,11 +23,11 @@ class Database {
         
     }
     function __destruct() {
-        $mysqli->close();
+        $this->mysqli->close();
     }
 
     function query($sql) { 
-        $result = $mysqli->query($sql);
+        $result = $this->mysqli->query($sql);
         return $result->fetch_assoc();
            
     } 
