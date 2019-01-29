@@ -120,7 +120,7 @@ if($_SESSION['username'] != "admin" && $_SESSION['username'] != "viewer")
   <?php } ?>
 
   <div id="map-container">
-    <img class="venue-map" src="images/venue-test" alt="venue">
+    <img class="venue-map" src="images/venue.png" alt="venue">
   </div>
 
 </div>
