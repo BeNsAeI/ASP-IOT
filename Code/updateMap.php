@@ -27,16 +27,12 @@ $db = new Database();
 
             if (empty($errors)) {
                 move_uploaded_file($file_tmp, $file);
-                $myfile = fopen("sql-error-2.txt", "w");
-                $txt = 'test';
-
+                
                 $sql = "INSERT INTO `duvoisil-db`.`map` (`File` ,`Rows` ,`Columns`) VALUES ('";
                 $sql .= $file; 
                 $sql .= "',  '10',  '10');";
                 $txt = $db->query($sql);
 
-                fwrite($myfile, $txt);
-                fclose($myfile);
             }
             if ($errors) print_r($errors);
         }
