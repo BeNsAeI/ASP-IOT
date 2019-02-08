@@ -23,6 +23,12 @@ function closeFormMap() {
   document.getElementById("mapForm").style.display = "none";
   document.getElementById("modal-backbround").style.display = "none";
 }
+function updateMapSize() {
+  var doc = document.querySelector("html");
+  var img = document.getElementById("venue-map");
+  doc.style.setProperty("--imageHeight",img.height + "px");
+  doc.style.setProperty("--imageWidth",img.width + "px");
+}
 
 
 
@@ -31,6 +37,8 @@ uploadForm.addEventListener('submit', e => {
   e.preventDefault();
   const uploadURL = 'updateMap.php';
   const files = document.getElementById("upload-map").files;
+  const rows = document.getElementById("change-map-rows").value;
+  const cols = document.getElementById("change-map-cols").value;
   const formData = new FormData();
 
   for (let i = 0; i < files.length; i++) {
@@ -38,6 +46,8 @@ uploadForm.addEventListener('submit', e => {
     console.log(file);
     formData.append('files[]', file);
   }  
+  formData.append('rows',rows);
+  formData.append('cols',cols);
 
   fetch(uploadURL, {
       method: 'POST',

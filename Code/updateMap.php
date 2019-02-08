@@ -17,6 +17,9 @@ $db = new Database();
 
             $file = $file_name;
 
+            $rows = $_POST['rows'];
+            $cols = $_POST['cols'];
+
             if (!in_array($file_ext, $extensions)) {
                 $errors[] = 'Extension not allowed: ' . $file_name . ' ' . $file_type . ' ' . $file_ext;
             }
@@ -27,10 +30,12 @@ $db = new Database();
 
             if (empty($errors)) {
                 move_uploaded_file($file_tmp, $file);
+                $img_size = getimagesize($file);
+                $img_width = $img_size[1];
+                $img_height = $img_size[0];
                 
-                $sql = "INSERT INTO `duvoisil-db`.`map` (`File` ,`Rows` ,`Columns`) VALUES ('";
-                $sql .= $file; 
-                $sql .= "',  '10',  '10');";
+                $sql = "INSERT INTO `duvoisil-db`.`map` (`File` ,`Rows` ,`Columns`) VALUES ('" . $file .
+                $sql .= "',  '" . $rows . "',  '" . $cols . "');";
                 $txt = $db->query($sql);
 
             }
