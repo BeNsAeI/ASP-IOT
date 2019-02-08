@@ -45,7 +45,7 @@ $db = new Database();
 
 </style>
 </head>
-<body>
+<body onload="updateMapSize()" onresize="updateMapSize()">
 
 <h2>Welcome to Ben and Jenna's Wedding</h2>
 
@@ -109,9 +109,14 @@ $db = new Database();
         <input id="upload-map" class="form-label-wide" type="file" name="image">
          <div class="form-input"></div> <!-- Intentionally left empty for form auto placement -->
 
+        <b class="form-label"> Rows:</b>
+        <input id="change-map-rows" class="form-input" type="number" placeholder="Number of rows" name="ROWS" required> 
+
+        <b class="form-label"> Columns:</b>
+        <input id="change-map-cols" class="form-input" type="number" placeholder="Number of columns" name="COLS" required> 
+
         <button type="button" class="btn cancel" onclick="closeFormMap()">Cancel</button>
         <input class="btn submit" type="submit" value="Upload File" name="submit">
-
       </form>
     </div>
 
@@ -121,13 +126,30 @@ $db = new Database();
 
   <div id="map-container">
     <?php
-    $sql = "SELECT * FROM  `map` ORDER BY id DESC LIMIT 0, 1" ;
+    $sql = "SELECT * FROM  `map` ORDER BY id DESC LIMIT 0, 1";
     $result = $db->query($sql);
     $mapPath = $result["File"];
     $rows = $result["Rows"];
     $columns = $result["Columns"];
     ?>
-    <img class="venue-map" src="images/<?php echo $mapPath;?>" alt="venue">
+    <style>
+      :root{
+        --rows: <?php echo $rows;?> ;
+        --cols: <?php echo $columns;?> ;
+        --imageWidth: <?php echo 0;?>px;
+        --imageHeight: <?php echo 0;?>px;
+      }
+    </style>
+    <img id="venue-map" src="images/<?php echo $mapPath;?>" alt="venue">
+    <div id="device-grid-container">
+
+      <?php for($i = 0; $i < $rows; $i++) {
+          for($j = 0; $j < $columns; $j++) {
+            echo '<div class="device-grid-cell device-grid-row-'. $i . ' device-grid-column-'. $j .'"> </div>'; 
+          }
+      }?>
+    
+    </div>
   </div>
 
 </div>
