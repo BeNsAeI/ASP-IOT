@@ -129,6 +129,8 @@ body{
     }
     #map-container{
         grid-area: map;
+        max-height: var(--imageHeight);
+        overflow: hidden;
     }
     .logout{
         grid-area: logout;
@@ -148,11 +150,18 @@ body{
         max-width: var(--imageWidth);
         max-height: var(--imageHeight);
         position: relative;
-        top: -50%;
+        top: -100%;
         margin: 0 auto;
     }
     .device-grid-cell{
         height: 100%;
         width: 100%;
+    }
+    .device{
+        height: 100%;
+        width: 100%;
+        border-radius: var(--imageHeight);
+        background-color: #ff0000;
+        z-index: 25;
     }
 }

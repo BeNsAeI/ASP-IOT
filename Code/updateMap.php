@@ -29,11 +29,7 @@ $db = new Database();
             }
 
             if (empty($errors)) {
-                move_uploaded_file($file_tmp, $file);
-                $img_size = getimagesize($file);
-                $img_width = $img_size[1];
-                $img_height = $img_size[0];
-                
+                move_uploaded_file($file_tmp, $file);                
                 $sql = "INSERT INTO `duvoisil-db`.`map` (`File` ,`Rows` ,`Columns`) VALUES ('" . $file .
                 $sql .= "',  '" . $rows . "',  '" . $cols . "');";
                 $txt = $db->query($sql);
