@@ -1,15 +1,18 @@
 <?php
+include 'config.php';
 
 class Database { 
     private $dbhost = 'oniddb.cws.oregonstate.edu';
     private $dbname = 'duvoisil-db';
     private $dbuser = 'duvoisil-db';
-    private $dbpass = 'e2dgjLF7I7FKOXc4'; 
+    private $dbpass; 
     private $mysqli;
 
     function __construct() {
         $myfile = fopen("sql-error.txt", "w");
-        $txt = 'test';        
+        $txt = 'test';  
+        global $databasepass;      
+        $this->dbpass = $databasepass;
 
         $this->mysqli = new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname);
 
@@ -29,8 +32,23 @@ class Database {
     function query($sql) { 
         $result = $this->mysqli->query($sql);
         return $result->fetch_assoc();
-           
     } 
+
+    function queryAll($sql){
+        $result = $this->mysqli->query($sql);
+        return $result->fetch_all();
+    }
+
+    function insertQuery($sql){
+        $result = $this->mysqli->query($sql);
+        if(!$result){
+            $myfile = fopen("sql-error.txt", "w");
+            $txt = 'IDK, it returned false I guess';  
+            fwrite($myfile, $txt);
+            fclose($myfile);
+        }
+        return $result;
+    }
 } 
 
 

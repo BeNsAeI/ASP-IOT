@@ -30,12 +30,45 @@ function updateMapSize() {
   doc.style.setProperty("--imageWidth",img.width + "px");
 }
 
-
-
-const uploadForm = document.getElementById("mapForm");
-uploadForm.addEventListener('submit', e => {
+const addFormElem = document.getElementById("addForm");
+addFormElem.addEventListener('submit', e => {
   e.preventDefault();
-  const uploadURL = 'updateMap.php';
+  const uploadURLAdd = 'addDevice.php';
+  //var radios = addFormElem.childNodes[0].elements["device"];
+  var radioval = addFormElem.querySelector('input[name="device"]:checked').value;
+  // for (var i=0, len=radios.length; i<len; i++) {
+  //   if ( radios[i].checked ) { 
+  //       radioval = radios[i].value; 
+  //       break;
+  //   }
+  // }
+
+
+  var name = document.getElementById("device-name").value;
+  var code = document.getElementById("device-code").value;
+  console.log(radioval);
+  console.log(name);
+  console.log(code);
+
+  const formData = new FormData();
+  formData.append('name',name);
+  formData.append('code',code);
+  formData.append('radioval',radioval);
+
+  fetch(uploadURLAdd, {
+      method: 'POST',
+      body: formData
+  }).then(response => {
+      //location.reload();
+      console.log(response);
+  });
+  closeFormAdd();
+});
+
+const mapFormElem = document.getElementById("mapForm");
+mapFormElem.addEventListener('submit', e => {
+  e.preventDefault();
+  const uploadURLMap = 'updateMap.php';
   const files = document.getElementById("upload-map").files;
   const rows = document.getElementById("change-map-rows").value;
   const cols = document.getElementById("change-map-cols").value;
@@ -49,7 +82,7 @@ uploadForm.addEventListener('submit', e => {
   formData.append('rows',rows);
   formData.append('cols',cols);
 
-  fetch(uploadURL, {
+  fetch(uploadURLMap, {
       method: 'POST',
       body: formData
   }).then(response => {

@@ -8,6 +8,7 @@ if($_SESSION['username'] != "admin" && $_SESSION['username'] != "viewer")
 ini_set('display_errors', 'on');
 
 include 'database.php';
+include 'device.php';
 $db = new Database();
 ?>
 <!DOCTYPE html>
@@ -41,9 +42,6 @@ $db = new Database();
   <link rel="icon" type="image/png" href="images/favicon.png">
 
 <title>Admin</title>
-<style>
-
-</style>
 </head>
 <body onload="updateMapSize()" onresize="updateMapSize()">
 
@@ -65,19 +63,19 @@ $db = new Database();
     <div id="modal-backbround"></div>
     <!--add camera form-->
     <div class="form-popup" id="addForm">
-      <form action='' class="form-container">
+      <form method="post" class="form-container">
         <h1>Add Device</h1>
         <b class="form-label"> Device Type: </b>
         <p class="form-input">
-        <input type="radio" name="camera" /> Normal Camera<br />
-        <input type="radio" name="camera" /> 360 Camera<br />
-        <input type="radio" name="camera" /> Microphone<br /> </p>
+        <input type="radio" name="device" value="normal" required checked/> Normal Camera<br />
+        <input type="radio" name="device" value="vr" /> 360 Camera<br />
+        <input type="radio" name="device" value="microphone" /> Microphone<br /></p>
 
         <b class="form-label"> Device Name:</b>
-        <input class="form-input" type="text" placeholder="Name" name="NAME" required>
+        <input id="device-name" class="form-input" type="text" placeholder="Name" name="NAME"  required>
 
         <b class="form-label"> Device Code:</b>
-        <input class="form-input" type="text" placeholder="Device Code" name="CODE" required> 
+        <input id="device-code" class="form-input" type="text" placeholder="Device Code" name="CODE"  required> 
 
         <button type="button" class="btn cancel" onclick="closeFormAdd()">Cancel</button>
         <button type="submit" class="btn submit">Submit</button>
@@ -87,7 +85,7 @@ $db = new Database();
 
     <!-- delete device form -->
     <div class="form-popup delete" id="deleteForm">
-      <form action='' class="form-container">
+      <form method="post" class="form-container">
         <h1>Delete</h1>
         <b class="form-label"> Device Name: </b>
         <input class="form-input" list="camera" name="camera">
@@ -110,10 +108,10 @@ $db = new Database();
          <div class="form-input"></div> <!-- Intentionally left empty for form auto placement -->
 
         <b class="form-label"> Rows:</b>
-        <input id="change-map-rows" class="form-input" type="number" placeholder="Number of rows" name="ROWS" required> 
+        <input id="change-map-rows" class="form-input" type="number" placeholder="Number of rows" name="ROWS" pattern="[0-9]" required> 
 
         <b class="form-label"> Columns:</b>
-        <input id="change-map-cols" class="form-input" type="number" placeholder="Number of columns" name="COLS" required> 
+        <input id="change-map-cols" class="form-input" type="number" placeholder="Number of columns" name="COLS" pattern="[0-9]" required> 
 
         <button type="button" class="btn cancel" onclick="closeFormMap()">Cancel</button>
         <input class="btn submit" type="submit" value="Upload File" name="submit">
@@ -121,7 +119,7 @@ $db = new Database();
     </div>
 
 
-    <script src="js/main.js"></script>
+    
   <?php } ?>
 
   <div id="map-container">
@@ -131,6 +129,24 @@ $db = new Database();
     $mapPath = $result["File"];
     $rows = $result["Rows"];
     $columns = $result["Columns"];
+
+    $sql = "SELECT * FROM  `devices`";
+    $results = $db->queryAll($sql);
+    
+    $devices = array();
+
+    foreach($results as $result){
+      //print_r($result);
+      $name = $result[1];
+      $code = $result[2];
+      $type = $result[3];
+      $row = $result[4];
+      $column = $result[5];
+
+      $devices[] = new Device($name, $code, $type, $row, $column); 
+    }
+
+
     ?>
     <style>
       :root{
@@ -145,12 +161,25 @@ $db = new Database();
 
       <?php for($i = 0; $i < $rows; $i++) {
           for($j = 0; $j < $columns; $j++) {
-            echo '<div class="device-grid-cell device-grid-row-'. $i . ' device-grid-column-'. $j .'"> </div>'; 
+            echo '<div class="device-grid-cell device-grid-row-'. $i . ' device-grid-column-'. $j .'">';
+            foreach($devices as $device){
+              if($i == 0 && $j == 0 && $device->getRow() > $rows && $device->getColumn() > $columns){
+                echo $device->getHTML();  //if the device has a coordinate that is larger than the grid put it at 0,0
+              }
+
+              if($device->getRow() == $i && $device->getColumn() == $j){
+                echo $device->getHTML();
+              }
+            }
+            echo '</div>'; 
           }
-      }?>
+      }
+
+      ?>
     
     </div>
   </div>
+  <script async src="js/main.js"></script>
 
 </div>
 </body>
