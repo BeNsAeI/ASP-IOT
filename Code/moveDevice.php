@@ -6,20 +6,19 @@ $db = new Database();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   
-        $name = $_POST['name'];
+        $row = $_POST['row'];
+        $column = $_POST['column'];
         $code = $_POST['code'];
-        $radioval = $_POST['radioval'];
         
-        $sql = "INSERT INTO `duvoisil-db`.`devices` (`name` ,`code` ,`type`, `row`, `column`) VALUES ('" . $name;
-        $sql .= "',  '" . $code . "',  '" . $radioval . "','0','0');";
+        $sql = 'UPDATE `duvoisil-db`.`devices` SET `row` = "'.$row.'", `column` = "'.$column.'" WHERE `code` = "'.$code.'"   ';
         $txt = $db->insertQuery($sql);
    
-        $myfile = fopen("errors/addDevice-error.txt", "a"); 
+        $myfile = fopen("errors/moveDevice-error.txt", "a"); 
         fwrite($myfile, $sql . "--end");
         fclose($myfile);
     }
     else {
-        $myfile = fopen("errors/addDevice-error.txt", "a");
+        $myfile = fopen("errors/moveDevice-error.txt", "a");
         $txt = 'Not Post Request';  
         fwrite($myfile, $txt);
         fclose($myfile);

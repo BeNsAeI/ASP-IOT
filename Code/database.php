@@ -9,7 +9,7 @@ class Database {
     private $mysqli;
 
     function __construct() {
-        $myfile = fopen("sql-error.txt", "w");
+        $myfile = fopen("errors/sql-error.txt", "a");
         $txt = 'test';  
         global $databasepass;      
         $this->dbpass = $databasepass;
@@ -42,8 +42,28 @@ class Database {
     function insertQuery($sql){
         $result = $this->mysqli->query($sql);
         if(!$result){
-            $myfile = fopen("sql-error.txt", "w");
-            $txt = 'IDK, it returned false I guess';  
+            $myfile = fopen("errors/sql-error.txt", "a");
+            $txt = 'INS returned false';  
+            fwrite($myfile, $txt);
+            fclose($myfile);
+        }
+        return $result;
+    }
+    function updateQuery($sql){
+        $result = $this->mysqli->query($sql);
+        if(!$result){
+            $myfile = fopen("errors/sql-error.txt", "a");
+            $txt = 'UPD returned false';  
+            fwrite($myfile, $txt);
+            fclose($myfile);
+        }
+        return $result;
+    }
+    function deleteQuery($sql){
+        $result = $this->mysqli->query($sql);
+        if(!$result){
+            $myfile = fopen("errors/sql-error.txt", "a");
+            $txt = 'DEL returned false';  
             fwrite($myfile, $txt);
             fclose($myfile);
         }

@@ -97,7 +97,9 @@ body{
     width: auto;
     height: auto;
 }
-
+#cancel-move-button{
+    display: none;
+}
 
 @supports(display: grid){
 
@@ -156,6 +158,8 @@ body{
     .device-grid-cell{
         height: 100%;
         width: 100%;
+        border-bottom: 0px solid #000000;
+        border-right: 0px solid #000000;
     }
     .device{
         height: 100%;
@@ -163,5 +167,12 @@ body{
         border-radius: var(--imageHeight);
         background-color: #ff0000;
         z-index: 25;
+    }
+    .selectable-device{
+        background-color: #55f324;
+        border: 1px solid #ff0000;
+    }
+    .selectable-cell{
+        background-color: #53ff3171;
     }
 }
