@@ -12,7 +12,6 @@ include 'device.php';
 $db = new Database();
 ?>
 <!DOCTYPE html>
-<!-- popup and formatting for popup taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form -->
 <html>
 <head>
 <!-- Basic Page Needs
@@ -40,24 +39,88 @@ $db = new Database();
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="images/favicon.png">
-
-<title>Admin</title>
+  <script src="js/main.js"></script>
+  <?php if($_SESSION['username'] == "admin"){ 
+    echo '<title>Admin</title>';
+    //echo '<script async src="js/admin.js"></script>';
+    //echo '<script async src="js/main.js"></script>';
+  }else {
+    echo '<title>Main</title>';
+    //echo '<script async src="js/main.js"></script>';
+    }?>
 </head>
 <body onload="updateMapSize()" onresize="updateMapSize()">
+<?php
+    $sql = "SELECT * FROM  `map` ORDER BY id DESC LIMIT 0, 1";
+    $result = $db->query($sql);
+    $mapPath = $result["File"];
+    $rows = $result["Rows"];
+    $columns = $result["Columns"];
+
+    $sql = "SELECT * FROM  `devices`";
+    $results = $db->queryAll($sql);
+    
+    $devices = array();
+
+    foreach($results as $result){
+      //print_r($result);
+      $name = $result[1];
+      $code = $result[2];
+      $type = $result[3];
+      $row = $result[4];
+      $column = $result[5];
+
+      $devices[] = new Device($name, $code, $type, $row, $column); 
+    } 
+    ?>
+<style>
+  :root{
+    --rows: <?php echo $rows;?> ;
+    --cols: <?php echo $columns;?> ;
+    --imageWidth: <?php echo 0;?>px;
+    --imageHeight: <?php echo 0;?>px;
+  }
+</style>
 
 <h2>Welcome to Ben and Jenna's Wedding</h2>
 
 <div id="main-content">
+
+  <div id="map-container">
+    <img id="venue-map" src="images/<?php echo $mapPath;?>" alt="venue">
+    <div id="device-grid-container">
+
+      <?php for($i = 0; $i < $rows; $i++) {
+          for($j = 0; $j < $columns; $j++) {
+            echo '<div class="device-grid-cell device-grid-row-'. $i . ' device-grid-column-'. $j .'" row="'. $i . '" column = "'. $j . '">';
+            foreach($devices as $device){
+              if($i == 0 && $j == 0 && ($device->getRow() > $rows || $device->getColumn() > $columns)){
+                echo $device->getHTML();  //if the device has a coordinate that is larger than the grid put it at 0,0
+              }
+
+              if($device->getRow() == $i && $device->getColumn() == $j){
+                echo $device->getHTML();
+              }
+            }
+            echo '</div>'; 
+          }
+      }
+
+      ?>
+    
+    </div>
+  </div>
 
   <a class="logout" href="logout.php"> Logout </a>
   <!-- Only show buttons and modal info if logged in as admin -->
   <?php if($_SESSION['username'] == "admin"){ ?>
 
     <div id="admin-buttons">
-      <button class="add-button" onclick="addForm()">ADD DEVICE</button>
-      <button class="move-button" onclick="openForm()">MOVE DEVICE</button>
-      <button class="delete-button" onclick="deleteForm()">DELETE DEVICE</button>
-      <button class="change-button" onclick="mapForm()">CHANGE MAP</button>
+      <button id="add-button" onclick="addForm()">ADD DEVICE</button>
+      <button id="move-button" onclick="startMove()">MOVE DEVICE</button>
+      <button id="cancel-move-button" onclick="cancelMove()">CANCEL MOVE</button>
+      <button id="delete-button" onclick="deleteForm()">DELETE DEVICE</button>
+      <button id="change-button" onclick="mapForm()">CHANGE MAP</button>
     </div>
 
     <div id="modal-backbround"></div>
@@ -88,12 +151,14 @@ $db = new Database();
       <form method="post" class="form-container">
         <h1>Delete</h1>
         <b class="form-label"> Device Name: </b>
-        <input class="form-input" list="camera" name="camera">
-        <datalist id="camera">
-            <option value="Normal camera1">
-            <option value="microphone">
-            <option value="360 camera">
-        </datalist>
+        <select id="device-list" class="form-input">
+          <?php
+            foreach($devices as $device){
+              $deviceNameAndCode = $device->getName() . '-' .$device->getCode();
+              echo '<option value="' . $device->getCode() . '">' . $deviceNameAndCode . '</option>';
+            }
+          ?>
+        </select>
         
         <button type="button" class="btn cancel" onclick="closeFormDelete()">Cancel</button>
         <button type="submit" class="btn submit">Submit</button>
@@ -118,70 +183,23 @@ $db = new Database();
       </form>
     </div>
 
-
-    
   <?php } ?>
 
-  <div id="map-container">
-    <?php
-    $sql = "SELECT * FROM  `map` ORDER BY id DESC LIMIT 0, 1";
-    $result = $db->query($sql);
-    $mapPath = $result["File"];
-    $rows = $result["Rows"];
-    $columns = $result["Columns"];
-
-    $sql = "SELECT * FROM  `devices`";
-    $results = $db->queryAll($sql);
-    
-    $devices = array();
-
-    foreach($results as $result){
-      //print_r($result);
-      $name = $result[1];
-      $code = $result[2];
-      $type = $result[3];
-      $row = $result[4];
-      $column = $result[5];
-
-      $devices[] = new Device($name, $code, $type, $row, $column); 
-    }
-
-
-    ?>
-    <style>
-      :root{
-        --rows: <?php echo $rows;?> ;
-        --cols: <?php echo $columns;?> ;
-        --imageWidth: <?php echo 0;?>px;
-        --imageHeight: <?php echo 0;?>px;
-      }
-    </style>
-    <img id="venue-map" src="images/<?php echo $mapPath;?>" alt="venue">
-    <div id="device-grid-container">
-
-      <?php for($i = 0; $i < $rows; $i++) {
-          for($j = 0; $j < $columns; $j++) {
-            echo '<div class="device-grid-cell device-grid-row-'. $i . ' device-grid-column-'. $j .'">';
-            foreach($devices as $device){
-              if($i == 0 && $j == 0 && $device->getRow() > $rows && $device->getColumn() > $columns){
-                echo $device->getHTML();  //if the device has a coordinate that is larger than the grid put it at 0,0
-              }
-
-              if($device->getRow() == $i && $device->getColumn() == $j){
-                echo $device->getHTML();
-              }
-            }
-            echo '</div>'; 
-          }
-      }
-
-      ?>
-    
-    </div>
-  </div>
-  <script async src="js/main.js"></script>
-
 </div>
+  <?php if($_SESSION['username'] == "admin"){ ?>
+  <script type="text/javascript">
+    function downloadJSAtOnload() {  
+        var element = document.createElement("script");
+        element.src = "js/admin.js";
+        document.body.appendChild(element);  
+    }
+    if (window.addEventListener)
+      window.addEventListener("load", downloadJSAtOnload, false);
+    else if (window.attachEvent)
+      window.attachEvent("onload", downloadJSAtOnload);
+    else window.onload = downloadJSAtOnload;
+  </script>
+<?php } ?>
 </body>
 
 
