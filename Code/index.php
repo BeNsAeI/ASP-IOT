@@ -78,7 +78,7 @@ if (isset($_POST['submit']))
         <!-- <fieldset> -->
           <legend class="login-text"> Enter your login token</legend>
           <p class="icon-key"> token </p>
-          <input id="user-token-input" type="text" name="token" />
+          <input id="user-token-input" type="text" name="token" pattern="[a-zA-Z0-9]{2,}" required/>
           <button id="submit-token" type="submit" name="submit">
             <i class="material-icons md-18">input</i>
           </button>

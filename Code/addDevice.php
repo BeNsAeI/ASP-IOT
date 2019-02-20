@@ -9,9 +9,11 @@ $db = new Database();
         $name = $_POST['name'];
         $code = $_POST['code'];
         $radioval = $_POST['radioval'];
+        $row = $_POST['row'];
+        $column = $_POST['column'];
         
         $sql = "INSERT INTO `duvoisil-db`.`devices` (`name` ,`code` ,`type`, `row`, `column`) VALUES ('" . $name;
-        $sql .= "',  '" . $code . "',  '" . $radioval . "','0','0');";
+        $sql .= "',  '" . $code . "',  '" . $radioval . "','" . $row . "','" . $column . "');";
         $txt = $db->insertQuery($sql);
    
         $myfile = fopen("errors/addDevice-error.txt", "a"); 

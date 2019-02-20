@@ -31,12 +31,17 @@ addFormElem.addEventListener('submit', e => {
   var radioval = addFormElem.querySelector('input[name="device"]:checked').value;
   var name = document.getElementById("device-name").value;
   var code = document.getElementById("device-code").value;
-
+  var row = document.getElementById("add-map-rows").value;
+  var column = document.getElementById("add-map-cols").value;
 
   const formData = new FormData();
   formData.append('name',name);
   formData.append('code',code);
   formData.append('radioval',radioval);
+  formData.append('row',row-1);
+  formData.append('column',column-1);
+
+  addFormElem.firstElementChild.reset();
 
   fetch(uploadURLAdd, {
       method: 'POST',
@@ -67,6 +72,7 @@ deleteFormElem.addEventListener('submit', e => {
       location.reload();
       //console.log(response);
   });
+  deleteFormElem.firstElementChild.reset();
   closeFormDelete();
 });
 
@@ -87,6 +93,7 @@ mapFormElem.addEventListener('submit', e => {
   formData.append('rows',rows);
   formData.append('cols',cols);
 
+  mapFormElem.firstElementChild.reset();
   fetch(uploadURLMap, {
       method: 'POST',
       body: formData
@@ -112,6 +119,7 @@ function startMove(e){
   var devices = document.getElementsByClassName("device");    //mark devices as clickable
   for (var i = 0, max = devices.length; i < max; i++) {
     devices[i].classList.add("selectable-device");
+    devices[i].parentNode.removeAttribute("href");
   }
   var grid = document.getElementById("device-grid-container"); 
   grid.addEventListener('click', deviceClicked);
@@ -132,6 +140,10 @@ function cancelMove(e){
   var devices = document.getElementsByClassName("device");    //unmarking devies as clickable
   for (var i = 0, max = devices.length; i < max; i++) {
     devices[i].classList.remove("selectable-device");
+    devices[i].classList.remove("selected-device");
+    var code = devices[i].parentNode.getAttribute("code");
+    devices[i].parentNode.setAttribute("href","stream.php?code=" + code);
+
   }
   var grid = document.getElementById("device-grid-container");
   
@@ -151,6 +163,7 @@ function restartMove(){
   var cells = document.getElementsByClassName("device-grid-cell");  
   for (var i = 0, max = devices.length; i < max; i++) {
     devices[i].classList.add("selectable-device");
+    devices[i].classList.remove("selected-device");
   }
   for (var i = 0, max = cells.length; i < max; i++) {
     cells[i].classList.remove("selectable-cell");
@@ -161,32 +174,40 @@ var devicechosen = false;
 var selectedDevice;
 function deviceClicked(e){
   console.log("Device Click Recognized");
-  if (e.target.classList.contains("selectable-device")){
+
+  if(e.target.parentNode.classList.contains("selectable-device")){
+    selectedDevice = e.target.parentNode;
+  } else if (e.target.classList.contains("selectable-device")){
     if(devicechosen){   //if you've already selected a device (will be the only one with the classname)
       restartMove();
       return;
     }
     devicechosen = true;
     selectedDevice = e.target;
-    var devices = document.getElementsByClassName("device");
-    for (var i = 0, max = devices.length; i < max; i++) {       //only highlight the selected device
-      if(devices[i] !== selectedDevice){
-        devices[i].classList.remove("selectable-device");
-      }
-    }
-    var cells = document.getElementsByClassName("device-grid-cell");    //show what grid cells that device can go to
-    for (var i = 0, max = cells.length; i < max; i++) {
-      if (!cells[i].hasChildNodes()){
-        cells[i].classList.add("selectable-cell");
-      }
-    }
-
-    var grid = document.getElementById("device-grid-container");
-    grid.addEventListener('click', cellClicked);
-    
   } else {
     console.log("Not a clickable device");
+    return;
   }
+  
+  var devices = document.getElementsByClassName("device");
+  for (var i = 0, max = devices.length; i < max; i++) {       //only highlight the selected device
+    if(devices[i] !== selectedDevice){
+      devices[i].classList.remove("selectable-device");
+    } else {
+      devices[i].classList.add("selected-device");
+    }
+  }
+  var cells = document.getElementsByClassName("device-grid-cell");    //show what grid cells that device can go to
+  for (var i = 0, max = cells.length; i < max; i++) {
+    if (!cells[i].hasChildNodes()){
+      cells[i].classList.add("selectable-cell");
+    }
+  }
+
+  var grid = document.getElementById("device-grid-container");
+  grid.addEventListener('click', cellClicked);
+    
+ 
 }
 
 function cellClicked(e){
@@ -204,7 +225,7 @@ function cellClicked(e){
     selectedDevice.setAttribute("column",cellCol);
     
 
-    cell.appendChild(selectedDevice);     //move the device
+    cell.appendChild(selectedDevice.parentNode);     //move the device
 
     const formData = new FormData();      //update the DB to reflect move
 

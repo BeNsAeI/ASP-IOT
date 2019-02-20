@@ -31,6 +31,9 @@ class Database {
 
     function query($sql) { 
         $result = $this->mysqli->query($sql);
+        $myfile = fopen("errors/sql-error.txt", "a");
+        fwrite($myfile, $sql);
+        fclose($myfile);
         return $result->fetch_assoc();
     } 
 
