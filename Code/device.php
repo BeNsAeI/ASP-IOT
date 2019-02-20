@@ -32,10 +32,19 @@ class Device {
         return $this->column;
     }  
     function getHTML(){
-        $html = '<div id="'.$this->code.'"';
+
+        if($this->type == "microphone"){        //Mics dont show on the map 
+            return "";                          
+        }
+        $html = '';
+        $html .= '<a href="stream.php?code='.$this->code.'" code="'.$this->code.'">';
+        $html .= '<div id="'.$this->code.'"';
         $html .= ' class="device '.$this->type.'"';
         $html .= 'row="'.$this->row.'"';
-        $html .= 'column="'.$this->column.'"></div>';
+        $html .= 'column="'.$this->column.'"><span class="device-icon">';
+        $html .= ($this->type == 'normal' ? 'N' :'V');
+        $html .= '</span></div>';
+        $html .= '</a>';
         return $html;
     }
 } 

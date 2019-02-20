@@ -57,7 +57,7 @@ $db = new Database();
     $rows = $result["Rows"];
     $columns = $result["Columns"];
 
-    $sql = "SELECT * FROM  `devices`";
+    $sql = 'SELECT * FROM  `devices`';
     $results = $db->queryAll($sql);
     
     $devices = array();
@@ -135,10 +135,16 @@ $db = new Database();
         <input type="radio" name="device" value="microphone" /> Microphone<br /></p>
 
         <b class="form-label"> Device Name:</b>
-        <input id="device-name" class="form-input" type="text" placeholder="Name" name="NAME"  required>
+        <input id="device-name" class="form-input" type="text" placeholder="Name" name="NAME" pattern="[a-zA-Z0-9]{2,}" required>
 
         <b class="form-label"> Device Code:</b>
-        <input id="device-code" class="form-input" type="text" placeholder="Device Code" name="CODE"  required> 
+        <input id="device-code" class="form-input" type="text" placeholder="Device Code" name="CODE" pattern="[a-zA-Z0-9]{2,}" required> 
+
+        <b class="form-label"> Rows:</b>
+        <input id="add-map-rows" class="form-input" type="number" placeholder="Row" name="ROWS" pattern="[0-9]" required> 
+
+        <b class="form-label"> Columns:</b>
+        <input id="add-map-cols" class="form-input" type="number" placeholder="Column" name="COLS" pattern="[0-9]" required> 
 
         <button type="button" class="btn cancel" onclick="closeFormAdd()">Cancel</button>
         <button type="submit" class="btn submit">Submit</button>
