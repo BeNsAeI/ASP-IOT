@@ -24,13 +24,10 @@ $db = new Database();
                 $errors[] = 'Extension not allowed: ' . $file_name . ' ' . $file_type . ' ' . $file_ext;
             }
 
-            if ($file_size > 2097152) {
-                $errors[] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type . ' ' . $file_size;
-            }
-
             if (empty($errors)) {
-                move_uploaded_file($file_tmp, $file);                
-                $sql = "INSERT INTO `duvoisil-db`.`map` (`File` ,`Rows` ,`Columns`) VALUES ('" . $file .
+                move_uploaded_file($file_tmp,"images/". $file);
+                chmod("images/".$file, 0775);                
+                $sql = "INSERT INTO `duvoisil-db`.`map` (`File` ,`Rows` ,`Columns`) VALUES ('" . $file;
                 $sql .= "',  '" . $rows . "',  '" . $cols . "');";
                 $txt = $db->query($sql);
 
@@ -38,7 +35,12 @@ $db = new Database();
             if ($errors) print_r($errors);
         }
         else{
-            echo "Files not set";
+            $rows = $_POST['rows'];
+            $cols = $_POST['cols'];
+
+            $sql = "UPDATE `duvoisil-db`.`map` SET `rows` = " . $rows . ", `columns` = " . $cols;
+            $sql .= " ORDER BY id DESC LIMIT 1";                
+            $txt = $db->insertQuery($sql);
         }     
     }
     else {
