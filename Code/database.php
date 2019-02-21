@@ -32,7 +32,7 @@ class Database {
     function query($sql) { 
         $result = $this->mysqli->query($sql);
         $myfile = fopen("errors/sql-error.txt", "a");
-        fwrite($myfile, $sql);
+        fwrite($myfile, $sql . "\n");
         fclose($myfile);
         return $result->fetch_assoc();
     } 
@@ -47,7 +47,7 @@ class Database {
         if(!$result){
             $myfile = fopen("errors/sql-error.txt", "a");
             $txt = 'INS returned false';  
-            fwrite($myfile, $txt);
+            fwrite($myfile, $txt . "\n" . $sql . "\n");
             fclose($myfile);
         }
         return $result;
@@ -57,7 +57,7 @@ class Database {
         if(!$result){
             $myfile = fopen("errors/sql-error.txt", "a");
             $txt = 'UPD returned false';  
-            fwrite($myfile, $txt);
+            fwrite($myfile, $txt . "\n". $sql . "\n");
             fclose($myfile);
         }
         return $result;
@@ -67,7 +67,7 @@ class Database {
         if(!$result){
             $myfile = fopen("errors/sql-error.txt", "a");
             $txt = 'DEL returned false';  
-            fwrite($myfile, $txt);
+            fwrite($myfile, $txt . "\n". $sql . "\n");
             fclose($myfile);
         }
         return $result;
