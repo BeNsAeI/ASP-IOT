@@ -42,7 +42,7 @@ class Device {
         $html .= ' class="device '.$this->type.'"';
         $html .= 'row="'.$this->row.'"';
         $html .= 'column="'.$this->column.'"><span class="device-icon">';
-        $html .= ($this->type == 'normal' ? 'N' :'V');
+        $html .= ($this->type == 'normal' ? '<i id="icon-camera" class="material-icons md-18">camera_alt</i>' :'<i id="icon-vr" class="material-icons md-18">360</i>');
         $html .= '</span></div>';
         $html .= '</a>';
         return $html;

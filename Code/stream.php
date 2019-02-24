@@ -42,6 +42,8 @@ $device = new Device($name, $code, $type, $row, $column);
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -68,11 +70,11 @@ $device = new Device($name, $code, $type, $row, $column);
 <body>
 
 
-<h2>Welcome to Ben and Jenna's Wedding</h2>
+<h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
 <div id="stream-content">
 
-  <p> Device code: <?php echo $device->getCode();?> </p>
+  <p class="description"> Device code: <?php echo $device->getCode();?> </p>
   <div id="stream-container">
     <a-scene embedded>
       <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
@@ -83,7 +85,7 @@ $device = new Device($name, $code, $type, $row, $column);
     </a-scene>
     
   </div>
-  <a class="back" href="main.php"> Back </a>
+  <a class="back" href="main.php"> <i id="icon-back" class="material-icons md-18">arrow_back</i> </a>
   <a class="logout" href="logout.php"> Logout </a>
   
 </body>

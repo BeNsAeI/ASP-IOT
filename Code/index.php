@@ -60,10 +60,11 @@ if (isset($_POST['submit']))
 
 </head>
 <body id="login">
+  <img id="background-image" src="images/index-background.jpg">
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container">
+  <div id="login-page-container" class="container">
     <div class="row login-header">
       <div class="two-thirds column">
         <h2>Welcome</h2>
@@ -73,21 +74,16 @@ if (isset($_POST['submit']))
       </div>
     </div>
     <div class="row">
-     <form method="POST" id="login-container" action="<?php //echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-        <!-- <form method="POST" action=''> -->
-        <!-- <fieldset> -->
+     <form method="POST" id="login-container" action="">
           <legend class="login-text"> Enter your login token</legend>
-          <p class="icon-key"> token </p>
+          <i id="icon-key" class="material-icons md-18">vpn_key</i>
           <input id="user-token-input" type="text" name="token" pattern="[a-zA-Z0-9]{2,}" required/>
           <button id="submit-token" type="submit" name="submit">
-            <i class="material-icons md-18">input</i>
+            <i id="icon-input" class="material-icons md-18">input</i>
           </button>
           <?php if($incorrectGuess){
             echo '<p class="token-fail"> Incorrect Login Token </p>';
           }?>
-        <!-- </fieldset> -->
-        <!-- </form>  -->
-        <!-- <input type="submit" name="submit"  value="Enter"> --> 
         </form>
     </div>
   </div>

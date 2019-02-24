@@ -177,6 +177,8 @@ function deviceClicked(e){
 
   if(e.target.parentNode.classList.contains("selectable-device")){
     selectedDevice = e.target.parentNode;
+  } else if(e.target.parentNode.parentNode.classList.contains("selectable-device")){
+    selectedDevice = e.target.parentNode.parentNode;
   } else if (e.target.classList.contains("selectable-device")){
     if(devicechosen){   //if you've already selected a device (will be the only one with the classname)
       restartMove();

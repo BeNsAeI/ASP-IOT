@@ -28,6 +28,8 @@ $db = new Database();
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -82,7 +84,7 @@ $db = new Database();
   }
 </style>
 
-<h2>Welcome to Ben and Jenna's Wedding</h2>
+<h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
 <div id="main-content">
 
@@ -155,7 +157,7 @@ $db = new Database();
     <!-- delete device form -->
     <div class="form-popup delete" id="deleteForm">
       <form method="post" class="form-container">
-        <h1>Delete</h1>
+        <h1>Delete Device</h1>
         <b class="form-label"> Device Name: </b>
         <select id="device-list" class="form-input">
           <?php
@@ -176,7 +178,6 @@ $db = new Database();
       <form method="post" class="form-container" enctype="multipart/form-data">
         <h1>Change Map</h1>
         <input id="upload-map" class="form-label-wide" type="file" name="image">
-         <div class="form-input"></div> <!-- Intentionally left empty for form auto placement -->
 
         <b class="form-label"> Rows:</b>
         <input id="change-map-rows" class="form-input" type="number" placeholder="Number of rows" name="ROWS" pattern="[0-9]" required> 

@@ -67,8 +67,7 @@
   }
 
   .form-container .form-label-wide{
-    grid-column: 2/5;
-    margin-right: 1em;
+    grid-column: 3/6;
   }
   .form-container .form-input{
     grid-column: 5/6;
