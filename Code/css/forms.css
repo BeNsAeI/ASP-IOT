@@ -22,8 +22,6 @@
   
   /* Full-width input fields */
   .form-container input[type=text], .form-container input[type=text] {
-    padding: 15px;
-    margin: 10px 5px 10px 5px;
     border: none;
     background: #f1f1f1;
   }

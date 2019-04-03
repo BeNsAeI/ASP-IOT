@@ -21,8 +21,10 @@ $code = $result['code'];
 $type = $result['type'];
 $row = $result['row'];
 $column = $result['column'];
+$ip = $result['ip'];
+$port = $result['port'];
 
-$device = new Device($name, $code, $type, $row, $column); 
+$device = new Device($name, $code, $type, $row, $column, $ip, $port); 
 
 ?>
 <!DOCTYPE html>
@@ -75,27 +77,32 @@ $device = new Device($name, $code, $type, $row, $column);
 
 <div id="stream-content">
 
+  <script src="js/hls.js"></script>
   <?php if ($device->getType() == "vr") { ?>
   <p class="description"> Device code: <?php echo $device->getCode();?> </p>
   <div id="stream-container">
     <a-scene embedded>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
+      <a-assets>
+        <video id="stream-container" autoplay loop="true" src="http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8"> </video>
+      </a-assets>
+
+      <!-- Using the asset management system. -->
+      <a-videosphere src="#stream-container"></a-videosphere>
+
+      <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
+      <!-- <a-videosphere src="africa.mp4"></a-videosphere> -->
     </a-scene>
     
   </div>
 
   
   <?php } else { ?>
-    <script src="js/hls.js"></script>
+    
 
-    <video id="stream-container" src="http://76.115.123.116:8554/camera/livestream.m3u8" type="application/x-mpegURL" controls autoplay>
+    <video id="stream-container" src="http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8" type="application/x-mpegURL" controls autoplay>
     Error displaying video.
     </video>
-
+  <?php } ?>
 
     
 
@@ -103,7 +110,7 @@ $device = new Device($name, $code, $type, $row, $column);
       var video = document.getElementById('stream-container');
       if(Hls.isSupported()) {
         var hls = new Hls();
-        hls.loadSource('http://76.115.123.116:8554/camera/livestream.m3u8');
+        hls.loadSource('http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8');
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED,function() {
           video.play();
@@ -115,13 +122,13 @@ $device = new Device($name, $code, $type, $row, $column);
     // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
     // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
       else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = 'http://76.115.123.116:8554/camera/livestream.m3u8';
+        video.src = 'http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8';
         video.addEventListener('loadedmetadata',function() {
           video.play();
         });
       }
     </script>
-  <?php } ?>
+  
   <a class="back" href="main.php"> <i id="icon-back" class="material-icons md-18">arrow_back</i> </a>
   <a class="logout" href="logout.php"> Logout </a>
   

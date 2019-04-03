@@ -71,8 +71,10 @@ $db = new Database();
       $type = $result[3];
       $row = $result[4];
       $column = $result[5];
+      $ip = $result[6];
+      $port = $result[7];
 
-      $devices[] = new Device($name, $code, $type, $row, $column); 
+      $devices[] = new Device($name, $code, $type, $row, $column, $ip, $port); 
     } 
     ?>
 <style>
@@ -147,6 +149,12 @@ $db = new Database();
 
         <b class="form-label"> Columns:</b>
         <input id="add-map-cols" class="form-input" type="number" placeholder="Column" name="COLS" pattern="[0-9]" required> 
+
+        <b class="form-label"> IP:</b>
+        <input id="add-map-ip" class="form-input" type="text" placeholder="IP" name="IP" pattern="[0-9.]{7,15}" required> 
+
+        <b class="form-label"> Port:</b>
+        <input id="add-map-port" class="form-input" type="number" placeholder="Port" name="PORT" pattern="[0-9]" required>
 
         <button type="button" class="btn cancel" onclick="closeFormAdd()">Cancel</button>
         <button type="submit" class="btn submit">Submit</button>

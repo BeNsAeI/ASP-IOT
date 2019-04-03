@@ -6,14 +6,17 @@ class Device {
     private $type;
     private $row;
     private $column;
+    private $ip;
+    private $port;
 
-    function __construct($name, $code, $type, $row, $column) {
+    function __construct($name, $code, $type, $row, $column, $ip, $port) {
         $this->name = $name;
         $this->code = $code;
         $this->type = $type;
         $this->row = $row;
         $this->column = $column;
-        
+        $this->ip = $ip;
+        $this->port = $port;
     }
 
     function getName() { 
@@ -30,7 +33,17 @@ class Device {
     } 
     function getColumn() { 
         return $this->column;
-    }  
+    }
+    function getIp() { 
+        return $this->ip;
+    } 
+    function getPort() { 
+        return $this->port;
+    }    
+
+    function getFullAddress(){
+        return $this->ip . ':' . $this->port;
+    }
     function getHTML(){
 
         if($this->type == "microphone"){        //Mics dont show on the map 

@@ -1,6 +1,6 @@
 <?php
 
 global $databasepass;
-$databasepass = 'wvBC03oPwKOZVzjS'; 
+$databasepass = 'oU4HwONW0p5JEAZB'; 
 
 ?>
