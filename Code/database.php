@@ -2,9 +2,9 @@
 include 'config.php';
 
 class Database { 
-    private $dbhost = 'oniddb.cws.oregonstate.edu';
-    private $dbname = 'duvoisil-db';
-    private $dbuser = 'duvoisil-db';
+    private $dbhost;
+    private $dbname;
+    private $dbuser;
     private $dbpass; 
     private $mysqli;
 
@@ -13,6 +13,12 @@ class Database {
         $txt = 'test';  
         global $databasepass;      
         $this->dbpass = $databasepass;
+        global $databasehost;
+        $this->dbhost = $databasehost;
+        global $databasename;
+        $this->dbname = $databasename;
+        global $databaseuser;
+        $this->dbuser = $databaseuser;
 
         $this->mysqli = new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname);
 
