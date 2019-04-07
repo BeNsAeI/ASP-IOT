@@ -73,9 +73,9 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
 <body>
 
 
-<h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
 <div id="stream-content">
+  <h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
   <script src="js/hls.js"></script>
   <?php if ($device->getType() == "vr") { ?>

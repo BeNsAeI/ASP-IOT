@@ -51,7 +51,6 @@ $db = new Database();
     //echo '<script async src="js/main.js"></script>';
     }?>
 </head>
-<body onload="updateMapSize()" onresize="updateMapSize()">
 <?php
     $sql = "SELECT * FROM  `map` ORDER BY id DESC LIMIT 0, 1";
     $result = $db->query($sql);
@@ -77,18 +76,18 @@ $db = new Database();
       $devices[] = new Device($name, $code, $type, $row, $column, $ip, $port); 
     } 
     ?>
+<body onload="updateMapSize(<?php echo $rows;?>)" onresize="updateMapSize(<?php echo $rows;?>)">
+
 <style>
-  :root{
+  html{
     --rows: <?php echo $rows;?> ;
     --cols: <?php echo $columns;?> ;
-    --imageWidth: <?php echo 0;?>px;
-    --imageHeight: <?php echo 0;?>px;
   }
 </style>
 
-<h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
 <div id="main-content">
+  <h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
   <div id="map-container">
     <img id="venue-map" src="images/<?php echo $mapPath;?>" alt="venue">
