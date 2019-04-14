@@ -110,9 +110,11 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
       var video = document.getElementById('stream-container');
       if(Hls.isSupported()) {
         var hls = new Hls();
+        console.log("loading stream");
         hls.loadSource('http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8');
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED,function() {
+          console.log("playing video");
           video.play();
       });
     }
