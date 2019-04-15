@@ -73,9 +73,9 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
 <body>
 
 
-<h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
 <div id="stream-content">
+  <h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
   <script src="js/hls.js"></script>
   <?php if ($device->getType() == "vr") { ?>
@@ -83,7 +83,7 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
   <div id="stream-container">
     <a-scene embedded>
       <a-assets>
-        <video id="stream-container" autoplay loop="true" src="http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8"> </video>
+        <video id="stream-container" autoplay loop="true" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8"> </video>
       </a-assets>
 
       <!-- Using the asset management system. -->
@@ -99,7 +99,7 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
   <?php } else { ?>
     
 
-    <video id="stream-container" src="http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8" type="application/x-mpegURL" controls autoplay>
+    <video id="stream-container" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8" type="application/x-mpegURL" controls autoplay>
     Error displaying video.
     </video>
   <?php } ?>
@@ -110,9 +110,11 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
       var video = document.getElementById('stream-container');
       if(Hls.isSupported()) {
         var hls = new Hls();
-        hls.loadSource('http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8');
+        console.log("loading stream");
+        hls.loadSource('http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8');
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED,function() {
+          console.log("playing video");
           video.play();
       });
     }
@@ -122,7 +124,8 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
     // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
     // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
       else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = 'http://<?php echo $device->getFullAddress();?>/camera/livestream.m3u8';
+        console.log("loading fallback");
+        video.src = 'http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8';
         video.addEventListener('loadedmetadata',function() {
           video.play();
         });

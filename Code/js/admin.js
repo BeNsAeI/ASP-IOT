@@ -33,6 +33,8 @@ addFormElem.addEventListener('submit', e => {
   var code = document.getElementById("device-code").value;
   var row = document.getElementById("add-map-rows").value;
   var column = document.getElementById("add-map-cols").value;
+  var ip = document.getElementById("add-map-ip").value;
+  var port = document.getElementById("add-map-port").value;
 
   const formData = new FormData();
   formData.append('name',name);
@@ -40,6 +42,8 @@ addFormElem.addEventListener('submit', e => {
   formData.append('radioval',radioval);
   formData.append('row',row-1);
   formData.append('column',column-1);
+  formData.append('ip',ip);
+  formData.append('port',port);
 
   addFormElem.firstElementChild.reset();
 
