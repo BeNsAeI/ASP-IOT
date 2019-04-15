@@ -1,0 +1,1 @@
+This is the folder that houses any script files that are used for the poject
