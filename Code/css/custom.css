@@ -100,7 +100,7 @@ video{
     }
     .icon-camera, .icon-vr{
         margin-left: 2px;
-        color: #ff0000;
+        color: #f89d00;
     }
     .token-fail{
         grid-area: fail;
@@ -214,7 +214,12 @@ video{
     .logout{
         display: block;
         margin: auto;
+        color: #F00;
         grid-area: logout;
+    }
+    .logout:hover{
+        color: #F00;
+
     }
     #stream-content .logout{
         margin-top: 2em;
