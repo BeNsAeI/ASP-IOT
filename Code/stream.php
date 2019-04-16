@@ -101,7 +101,7 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
 
     <video id="stream-container" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8" type="application/x-mpegURL" controls autoplay>
     Error displaying video.
-    </video>
+    </video> 
   <?php } ?>
 
     
