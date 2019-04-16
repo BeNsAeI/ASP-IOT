@@ -1,6 +1,9 @@
 # ASP-IOT
 A-Frame Streaming Portal - IOT
 
+Installation instructions in the CodefreezeGuide folder
+
+
 Objectives:
 1- a web portal containing a map of the venue
 2- the map should include the location of at least 3 streaming devices
