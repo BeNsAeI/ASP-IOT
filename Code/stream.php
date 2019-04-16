@@ -83,11 +83,11 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
   <div id="stream-container">
     <a-scene embedded>
       <a-assets>
-        <video id="stream-container" autoplay loop="true" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8"> </video>
+        <video autoplay loop="true" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8" type="application/x-mpegURL" crossorigin="*"> </video>
       </a-assets>
 
       <!-- Using the asset management system. -->
-      <a-videosphere src="#stream-container"></a-videosphere>
+      <a-videosphere id="stream-container" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8" crossorigin="*"></a-videosphere>
 
       <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
       <!-- <a-videosphere src="africa.mp4"></a-videosphere> -->
@@ -101,7 +101,7 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
 
     <video id="stream-container" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8" type="application/x-mpegURL" controls autoplay>
     Error displaying video.
-    </video>
+    </video> 
   <?php } ?>
 
     
