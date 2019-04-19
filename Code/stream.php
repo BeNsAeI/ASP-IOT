@@ -65,7 +65,10 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
   <!-- Aframe
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
-
+  <script src="js/hls.js"></script>
+  <script src="js/arrow-key-rotation.js"></script>
+  <script src="js/play-on-window-click.js"></script>
+  <script src="js/play-on-vrdisplayactivate-or-enter-vr.js"></script>
 
   <title>Stream</title>   
   <!-- TODO: include device name -->
@@ -77,21 +80,83 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
 <div id="stream-content">
   <h2 class="title">Welcome to Ben and Jenna's Wedding</h2>
 
-  <script src="js/hls.js"></script>
+  
   <?php if ($device->getType() == "vr") { ?>
-  <p class="description"> Device code: <?php echo $device->getCode();?> </p>
-  <div id="stream-container">
-    <a-scene embedded>
-      <a-assets>
-        <video autoplay loop="true" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8" type="application/x-mpegURL" crossorigin="*"> </video>
+  
+
+    <a-scene stats="" class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="">
+      <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
+      <a-videosphere rotation="0 180 0" src="#stream-container" play-on-window-click="" play-on-vrdisplayactivate-or-enter-vr="" position="" scale="" visible="" material="" geometry="">
+      </a-videosphere>
+      
+      <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
+      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation="" position="" rotation="" scale="" visible="" camera="" look-controls="" wasd-controls="">
+        <!-- Text elements for display messaging. -->
+        <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; 
+                width:3;
+                wrapCount:100;
+                color:red;
+                value:Click window to make the video play, if needed." rotation="" scale="" visible="">
+        </a-entity>
+        <!--
+          This should work with, at least:
+          Safari Technology Preview on MacOS, Edge on Windows 10, Oculus Browser, Samsung Internet, Chrome on Android
+          (application/x-mpegurl, which is native HLS).
+          Firefox on MacOS / Windows, Chrome on MacOS / Windows 
+          (video/mp4).
+
+          This may fail with, at least:
+          Safari on MacOS / iOS (HLS and/or CORS bugs), Chromium (missing codec support).
+        -->
+      </a-camera>      
+      
+      <!-- Don't wait for the video to load, we're going to stream it. -->
+      <a-assets timeout="1">
+        <!-- Multiple source video. -->
+        <video id="stream-container" style="display:none" autoplay="" loop="" crossorigin="anonymous" playsinline="" webkit-playsinline="">
+          <!-- Native HLS video source. -->
+          <source type="application/x-mpegurl" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8">
+          <!-- MP4 video source. -->
+        </video>
+		<script>
+		  var video = document.getElementById('stream-container');
+		  if(Hls.isSupported()) {
+			var hls = new Hls();
+			console.log("loading stream");
+			hls.loadSource('http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8');
+			hls.attachMedia(video);
+			hls.on(Hls.Events.MANIFEST_PARSED,function() {
+			  console.log("playing video");
+			  video.play();
+		  });
+		}
+		// hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+		// When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+		// This is using the built-in support of the plain video element, without using hls.js.
+		// Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
+		// white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
+		  else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+			console.log("loading fallback");
+			video.src = 'http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8';
+			video.addEventListener('loadedmetadata',function() {
+			  video.play();
+			});
+		  }
+		</script>-->
       </a-assets>
-
-      <!-- Using the asset management system. -->
-      <a-videosphere id="stream-container" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8" crossorigin="*"></a-videosphere>
-
-      <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
-      <!-- <a-videosphere src="africa.mp4"></a-videosphere> -->
-    </a-scene>
+    <canvas class="a-canvas a-grab-cursor" data-aframe-canvas="true" width="1920" height="1067" style="width: 1920px; height: 1067px;"></canvas><div class="a-enter-vr" aframe-injected=""><button class="a-enter-vr-button" title="Enter VR mode with a headset or fullscreen mode on a desktop. Visit https://webvr.rocks or https://webvr.info for more information." aframe-injected=""></button></div><div class="a-orientation-modal a-hidden" aframe-injected=""><button aframe-injected="">Exit VR</button></div><a-entity light="" data-aframe-default-light="" aframe-injected="" position="" rotation="" scale="" visible=""></a-entity><a-entity light="" position="" data-aframe-default-light="" aframe-injected="" rotation="" scale="" visible=""></a-entity></a-scene>
+    
+    <!-- Attach other behaviors. -->
+    <script>
+      var video = document.querySelector('#video');
+      var msg = document.querySelector('#msg');
+      
+      // When we get the playing event, show what source is used and what type it is.
+      video.addEventListener('playing', function () {
+        var currentSource = video.querySelector('[src="' + video.currentSrc + '"]');
+        msg.setAttribute('text', 'value', video.currentSrc + '\n' + currentSource.type);                
+      });
+    </script>
     
   </div>
 
@@ -102,7 +167,7 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
     <video id="stream-container" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8" type="application/x-mpegURL" controls autoplay>
     Error displaying video.
     </video> 
-  <?php } ?>
+  
 
     
 
@@ -117,13 +182,7 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
           console.log("playing video");
           video.play();
       });
-    }
-    // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
-    // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
-    // This is using the built-in support of the plain video element, without using hls.js.
-    // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
-    // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
-      else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         console.log("loading fallback");
         video.src = 'http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8';
         video.addEventListener('loadedmetadata',function() {
@@ -131,6 +190,7 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
         });
       }
     </script>
+    <?php } ?>
   
   <a class="back" href="main.php"> <i id="icon-back" class="material-icons md-18">arrow_back</i> </a>
   <a class="logout" href="logout.php"> Logout </a>
