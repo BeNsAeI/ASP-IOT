@@ -1,0 +1,226 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{		Nexusphere}
+\def \CapstoneTeamNumber{		48}
+\def \GroupMemberOne{			Meghan Mowery}
+\def \GroupMemberTwo{			Louis Duvoisin}
+\def \GroupMemberThree{			Sarahi Pelayo}
+\def \CapstoneProjectName{		A-Frame Live Stream Portal}
+\def \CapstoneSponsorCompany{	Oregon State University}
+\def \CapstoneSponsorPerson{		Behnam Saeedi}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{	%Problem Statement
+				Requirements Document
+				%Technology Review
+				%Design Document
+				%Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+%\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+    	%\includegraphics[height=4cm]{coe_v_spot1}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+        }
+        \begin{abstract}
+        % 6. Fill in your abstract    
+    	A-Frame Live Stream Portal is a project that will be used to bring families closer together, even when adversity keeps them apart.
+    	This report covers the different components of this project, including hardware and software. 
+    	The first half of this report describes the concepts involved in the Requirements Document.
+    	This includes a description of the purpose, overview, and definitions used.
+    	The second half of the report describes the project itself, detailing the finer points of the project.
+    	The purpose of this report is to give our sponsor a full description of what the project entails, and confirm that it meets their needs.
+    	Our desire is to create a project that is simple, efficient, and cost-effective.
+        \end{abstract}   	 
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+\begin{center}
+ \begin{tabular}{||p{1cm} p{7cm} p{7cm}||} 
+ \hline
+ Section & Origional & New\\ [0.5ex] 
+ \hline\hline
+ 1.3.1 & Document overview & Rewording\\
+ \hline
+ 3.1 & Functional requirements & Rewording \\ 
+ \hline
+ 3.4 & Mentioned English and Farsi & No words on viewer page, only English for admin page \\ 
+ \hline
+ 3.6 & Mentioned developer mode & Removed developer mode \\ 
+ \hline
+  3.13 & Packaging, handling... & Rewording \\ 
+ \hline
+ 4 & Gantt chart was included & Removed Gantt chart \\[1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+\section{Introduction}
+    \subsection{Document purpose}
+    The purpose of this report is to describe in detail the work to be done on the project, and the specific functions that will need to be implemented as requested by the sponsor.
+
+    \subsection{Document scope}
+    This document will cover all aspects of the project, including the hardware and software development.
+    The report also includes a gantt chart to show our expected completion of different aspects of the project.
+    
+    \subsection{Document overview}
+        \subsubsection{System context}
+        The finished A-Frame Live Stream Portal will be able to livestream video from at least 3 camera devices, one of which must be 360 degree video, at 480p and 30 fps. 
+        The system shall also stream audio in conjunction with the video stream. 
+        Users will connect to a web portal where they are able to select on a map which device they will view the the livestream from. 
+        The site owner shall also be able to modify the map and the locations of the cameras.
+    \\
+        The system has two major parts, the streaming devices, and the server hosting the web portal. 
+        The streaming devices shall capture videos of the wedding and each will individually stream that data to the server through their own internet connection. 
+        The server shall allow users to connect to the map of the venue and select a device to view the wedding from. 
+        The server will then send the video coming from the selected camera to the user along with the audio.
+        
+        \subsubsection{System functions}
+        The function of the cameras shall be to record the wedding live. 
+        Two of these cameras will be in a regular mode, while the other has 360 degree capabilities. 
+        This way, the family can have a more realistic view of the ceremony.
+        The web portal shall be used to access the cameras. 
+        The web portal shall display the location of the cameras to the family, and they will have the option to select a camera to use. 
+        The sponsor will have the ability to edit the locations of the cameras on the web portal, as well as update the map of the venue. The sponsor will also be able to add and remove cameras as desired.
+        
+        \subsubsection{User characteristics}
+        The system has 2 types of users, admins and viewers. 
+        Admins are the users who will set up the devices and have the ability to edit the map and location of devices on the web portal.
+        Viewers will need to log in with an access token and will then be able to select a device on a map of the venue, admins will also be able to see this page. 
+        When either a viewer or an admin clicks on a device they shall be taken to a new page with the livestream from the device they chose.
+        
+    \subsection{Definitions}
+        \begin{tabular}{ll}
+         Fps & Frames Per Second \\ 
+         Jpeg & Joint Photographic Experts Group (image file format) \\ 
+         Png & Portable Network Graphics (image file format) \\
+         Web Portal & A website that displays information from multiple external sources \\ 
+         Access Token & Randomly generated sequence of characters used for authentication \\
+        \end{tabular}
+
+    
+\section{References}
+
+\section{System requirements}
+    \subsection{Functional requirements}
+     This system is being developed to allow the relatives of our sponsors to experience our sponsors' wedding from outside of the country.
+    Two cameras shall stream normal video from two locations to the web portal a third camera shall also stream 360 degree video to the web portal. In addition to the three cameras, audio will also be streamed with the video.
+    The web portal shall run properly without crashing even when devices are added or removed.
+    
+    \subsection{Usability requirements}
+    Each streaming device will have their own internet connection so that they can stream their video feed independently of one another.
+    The web portal will broadcast the video with a maximum of one minute delay. Changing the battery of the devices will be quick and easy to do. 
+    
+    \subsection{Performance requirements}
+    The cameras will have at least 480p at 30fps stream quality with the maximum latency of one minute. 
+    Each camera with a fully charged battery will last at least the average time of a wedding ceremony. 
+ 
+    
+    \subsection{System interface}
+    The system will have an attractive website with an intuitive interface which will allow those tuning in to explore the venue using a complete map by clicking on the device icons. 
+    The website's map will have the physical location of the devices as clickable icons linking to a separate page where users are able to view the stream.
+    The map's edit mode shall mainly use symbols for adding, removing, and updating the location of cameras. Words on the website will be kept to a minimum and are only present in admin mode.
+
+    \subsection{System operations}
+    The web portal will have a log-in page, where the user will enter a code given to them by the sponsor.
+    Both users and admins will log in using access tokens, if we have enough time to implement it admins may instead log in using a username and password.
+    Visitors can select an image (one representing either the normal or 360 view camera) to view that devices stream. 
+    The admin can also add and remove cameras, as well as update the web portal's map.
+    The cameras can be powered on and off, and have independent WiFi connections meaning if one fails the system can continue uninterrupted. The cameras will need to be connected to WiFi at the venue.
+    
+    \subsection{System modes and states}
+    The system will have two modes: normal and edit. The map’s interface will have an edit mode that allows for the update of the venue map image using a .png or .jpeg. 
+    Because the streaming devices are independent, the edit mode will also have the options to add, remove, and reposition devices on the map which can be saved. The normal mode will be what viewers use where they can interact with the map and access streams.
+    
+    \subsection{Physical characteristics}
+    %needs to be rain proof
+    The hardware shall be encased so there are no exposed wires while buttons will still remain accessible.
+    The cameras themselves will be sturdy to reduce the risk of them falling over and breaking however weighing no more than 20lbs each. 
+    The battery will be removable.
+    The web portal will be as simplistic as possible.
+    This means that the web portal will have limited words, and instead use icons to represent the different functions of the system. Although the system is being developed for three cameras the system may have the option for expanding the system with more cameras.
+    The system is not water resistant but will be rain proof.
+    
+    \subsection{Environmental conditions}
+    The hardware is expected to preform well in conditions that are considered suitable for humans between 15 degrees Celsius to 25 degrees Celsius. 
+    The system shall work well in indoor conditions. Performance and quality may be affected by lighting, wind, extreme temperatures, flora, fauna, fungus, mold, sand, salt spray, dust, radiation, chemical, immersion, motion, and shock.
+    
+    \subsection{System security}
+    The owner will be admin by default. 
+    Only admins will be allowed to enter edit map mode. 
+    Viewers will not be allowed to change locations, add, or remove devices on the website's map. 
+    To respect the privacy of users, streams will be private. 
+    Viewers will be able to log in with an access token to access the broadcasts. Users will agree that their private streams may be accessed by developers for troubleshooting but will not be shown to the general public.
+    
+    \subsection{Information management}
+    The system will store the generated tokens used for viewers to log-in to the web portal.
+    The audio and video recorded from the wedding will be live streamed directly to the viewers.
+    
+    \subsection{Policies and regulations}
+    The system will maintain the privacy of the viewers and attendees of the wedding through the information listed in section 3.9.
+    
+    \subsection{System life cycle sustainment}
+    To sustain the system, the cameras will need charged batteries, and the computers accessing the web portal will also need a reliable internet connection. 
+    In case of a camera failure or breakdown, the web portal contains an option to add or remove cameras from the system so they can be replaced if needed.
+    Basic understanding of the web portal and the cameras will be required to maintain and utilize the system.
+    
+    \subsection{Packaging, handling, shipping and transportation}
+    The cameras and microphone will be portable and easy to set up so they can be moved to and from sites as well as within the venue. 
+    The hardware of the systems shall be packages with shock absorbing material and labeled as fragile. 
+    When shipping the packaged system it shall be handled gentle as to not destroy an part. 
+    
+\section{Verification}
+The system will be considered fully operational when the web portal is operational by both the admin and the viewers, and the cameras properly record and stream the video and audio.
+The admin will be able to edit the display of the web portal, including the cameras, as desired.
+Finally, the viewers will be able to access the portal with their distributed tokens to view the ceremony. 
+\end{document}
