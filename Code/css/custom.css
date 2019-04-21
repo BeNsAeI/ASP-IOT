@@ -183,6 +183,9 @@ video{
         "back stream logout"
         ". description ."
     }
+    #a-container{
+        grid-area: stream;
+    }
     #stream-container{
         grid-area: stream;
     }
