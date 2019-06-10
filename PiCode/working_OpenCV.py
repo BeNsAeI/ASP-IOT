@@ -29,11 +29,12 @@ class Threads:
         self.frames = None
         self.vc = []
         self.count = 0
-	self.first=first
+        self.first=first
         self.thread = []
 
     def start(self):
-        self.frames = cv2.VideoCapture("/home/pi/node-rtsp-rtmp-server/public/picam/stream/"+str(self.first+self.count-1)+".ts")
+        self.frames = cv2.VideoCapture("/home/pi/node-rtsp-rtmp-server/public/picam/stream/98.ts")
+	#+str(self.first+self.count-1)+".ts")
         for i in range(0,20):
             success, frame = self.frames.read()
             self.vc.append(frame)
@@ -49,7 +50,7 @@ class Threads:
         finalImageWidth = round(float(max(innerRadius, outerRadius)) * 2.0 * np.pi)
         finalImageHeight = (outerRadius-innerRadius)
         self.xmap,self.ymap = buildMap(finalImageWidth,finalImageHeight,innerRadius,outerRadius,centerX,centerY)
-	for i in range(0,4):
+        for i in range(0,4):
             self.thread.append(Thread(target=self.run, name=self.name+str(i), args=[i]))
         for i in range(0,4):
             self.thread[i].start()
@@ -59,9 +60,9 @@ class Threads:
         while i <= 16:
             img = self.vc[3+i]
             result = unwarp(self.img,self.xmap,self.ymap)
-            fname = "/home/pi/360_pi_cam/python/images/FRAME{num:05d}.png".format(num=start + i)
+            fname = "/home/ffmpeg/frames/FRAME{num:05d}.png".format(num=start + i)
             cv2.imwrite(fname,result)
             i += 4
-print cv2.__version__
+#print cv2.__version__
 myThreads = Threads("360_Came",int(sys.argv[1]))
 myThreads.start()
