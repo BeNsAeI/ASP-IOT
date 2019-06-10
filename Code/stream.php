@@ -86,7 +86,12 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
 
     <a-scene id="a-container" keyboard-shortcuts="" screenshot="" vr-mode-ui="" embedded>
       <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
-      <a-videosphere rotation="0 180 0" src="#stream-container" play-on-window-click="" play-on-vrdisplayactivate-or-enter-vr="" position="" scale="" visible="" material="" geometry="">
+      <?php if ($deviceCode == "360prerec") { ?>
+        <a-videosphere rotation="0 0 0" src="#stream-container" play-on-window-click="" play-on-vrdisplayactivate-or-enter-vr="" position="" scale="-1 1 1" visible="" material="" geometry="primitive:sphere;radius:5000;segmentsWidth:84;segmentsHeight:48">
+      <?php } else { ?>
+        <a-videosphere rotation="0 0 0" src="#stream-container" play-on-window-click="" play-on-vrdisplayactivate-or-enter-vr="" position="" scale="-1 1 1" visible="" material="" geometry="primitive:sphere;radius:5000;segmentsWidth:64;segmentsHeight:64">
+      <?php } ?>
+
       </a-videosphere>
       
       <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
@@ -108,34 +113,41 @@ $device = new Device($name, $code, $type, $row, $column, $ip, $port);
         <!-- Multiple source video. -->
         <video id="stream-container" style="display:none" autoplay="" loop="" crossorigin="anonymous" playsinline="" webkit-playsinline="">
           <!-- Native HLS video source. -->
-          <source type="application/x-mpegurl" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8">
+          <?php if ($deviceCode == "360prerec") { ?>
+            <source type="video/mp4" src="streams/prerec360.mp4">
+          <?php } else { ?>
+            <source type="application/x-mpegurl" src="http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8">
+          <?php } ?>
           <!-- MP4 video source. -->
         </video>
-      <script>
-        var video = document.getElementById('stream-container');
-        if(Hls.isSupported()) {
-        var hls = new Hls();
-        console.log("loading stream");
-        hls.loadSource('http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8');
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED,function() {
-          console.log("playing video");
-          video.play();
-        });
-      }
-      // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
-      // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
-      // This is using the built-in support of the plain video element, without using hls.js.
-      // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
-      // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
-        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        console.log("loading fallback");
-        video.src = 'http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8';
-        video.addEventListener('loadedmetadata',function() {
-          video.play();
-        });
-        }
-      </script>-->
+
+        <?php if ($deviceCode != "360prerec") { ?>
+          <script>
+            var video = document.getElementById('stream-container');
+            if(Hls.isSupported()) {
+            var hls = new Hls();
+            console.log("loading stream");
+            hls.loadSource('http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED,function() {
+              console.log("playing video");
+              video.play();
+            });
+          }
+          // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+          // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+          // This is using the built-in support of the plain video element, without using hls.js.
+          // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
+          // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            console.log("loading fallback");
+            video.src = 'http://<?php echo $device->getFullAddress();?>/picam/stream/index.m3u8';
+            video.addEventListener('loadedmetadata',function() {
+              video.play();
+            });
+            }
+          </script>
+        <?php } ?>
         </a-assets>
       <div class="a-enter-vr" aframe-injected="">
         <button class="a-enter-vr-button" title="Enter VR mode with a headset or fullscreen mode on a desktop. Visit https://webvr.rocks or https://webvr.info for more information." aframe-injected=""></button>
