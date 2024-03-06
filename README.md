@@ -21,8 +21,6 @@ Here are a few useful sources:
 - A shot and fast tutorial: http://web.engr.oregonstate.edu/~saeedib/resume/A-Frame.html
 - 360 Video example: https://aframe.io/examples/showcase/videosphere/
 - Ben's email: Saeedib@oregonstate.edu
-- Jenna's email: Js.bs.wedding@gmail.com
 - Ben's Website: http://web.engr.oregonstate.edu/~saeedib/
 - Ben's Cell number: 818-699-3803
-- Jenna's Cell number: 503-536-5979
 
